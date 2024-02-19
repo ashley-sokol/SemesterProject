@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'a28-workplace-violations-3cea70b449e2.herokuapp.com',
+    '127.0.0.1', 'localhost',
 ]
 
 
