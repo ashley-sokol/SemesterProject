@@ -77,6 +77,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+
 ROOT_URLCONF = 'workplace_violation_project.urls'
 
 TEMPLATES = [
