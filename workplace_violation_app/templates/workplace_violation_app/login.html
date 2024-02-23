@@ -6,7 +6,6 @@
     <h2>Please login below</h2>
         {% if user.is_authenticated %}
             <p>Welcome, You are logged in as {{ user.username }}</p>
-            <a href="{% url 'workplace_violation_app:logout' %}">Logout</a>
         {% else %}
             <a href="{% provider_login_url 'google' %}">Login With Google</a>
         {% endif %}
