@@ -62,8 +62,8 @@ MIDDLEWARE = [
 
 SITE_ID = 2
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/workplace_violation_app/'
+LOGOUT_REDIRECT_URL = '/workplace_violation_app/'
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -104,9 +104,9 @@ WSGI_APPLICATION = 'workplace_violation_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'deqk7i3kso31tp',
-        'USER': 'blrpkujmskrqge',
-        'PASSWORD': '9e13376e2dd7352162e7443d5d089110dfaed010e993cf54e2d90d51a0709329',
+        'NAME': 'd1pu18gtrfp3r5',
+        'USER': 'xixnnnzvsxjcmh',
+        'PASSWORD': 'be86057557c999f0c7017bed0030d610151dc15a34b0db57672b5c9ecd31929d',
         'HOST': 'ec2-34-236-199-229.compute-1.amazonaws.com',
         'PORT': '5432',
     }
@@ -169,3 +169,5 @@ AUTHENTICATION_BACKENDS = [
         'django.contrib.auth.backends.ModelBackend',
         'allauth.account.auth_backends.AuthenticationBackend'
     ]
+
+AUTH_USER_MODEL = "workplace_violation_app.CustomUser" 
