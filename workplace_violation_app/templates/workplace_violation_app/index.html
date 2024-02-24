@@ -5,11 +5,11 @@
     {% if not user.is_authenticated %}
       <a href="{% url 'workplace_violation_app:login' %}" class="btn btn-outline-primary text-center">Login</a>
     {% endif %}
-    {% if not user.is_admin %}
-      <h2> Report a Violation</h2>
-        This will eventually have a form to submit the workplace violation.
-    {% endif %}
+    <h2> Report a Violation</h2>
+    This will eventually have a form to submit the workplace violation.
+
     {% if user.is_admin %}
+      <a href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-primary text-center">View Current Reports</a>
     {% endif %}
 
   </div>
