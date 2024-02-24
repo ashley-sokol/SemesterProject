@@ -2,7 +2,16 @@
 {% block content %}
   <div class="text-center">
     <h1>Hello Welcome to the App</h1>
-    <a href="{% url 'workplace_violation_app:login' %}" class="btn btn-outline-primary text-center">Login</a>
+    {% if not user.is_authenticated %}
+      <a href="{% url 'workplace_violation_app:login' %}" class="btn btn-outline-primary text-center">Login</a>
+    {% endif %}
+    {% if not user.is_admin %}
+      <h2> Report a Violation</h2>
+        This will eventually have a form to submit the workplace violation.
+    {% endif %}
+    {% if user.is_admin %}
+    {% endif %}
+
   </div>
 {% endblock %}
 
