@@ -42,6 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -52,14 +57,33 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware'
 ]
+
+SITE_ID = 2
+
+LOGIN_REDIRECT_URL = '/workplace_violation_app/'
+LOGOUT_REDIRECT_URL = '/workplace_violation_app/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
 
 ROOT_URLCONF = 'workplace_violation_project.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,10 +104,10 @@ WSGI_APPLICATION = 'workplace_violation_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'deqk7i3kso31tp',
-        'USER': 'blrpkujmskrqge',
-        'PASSWORD': '9e13376e2dd7352162e7443d5d089110dfaed010e993cf54e2d90d51a0709329',
-        'HOST': 'ec2-34-236-199-229.compute-1.amazonaws.com',
+        'NAME': 'dah5ssulc1rkmj',
+        'USER': 'semqpddyuzflik',
+        'PASSWORD': 'ab8d8501634236a800366e1077a02dde57aca34d80ee3cc7b75c31f35dd7d9e9',
+        'HOST': 'ec2-3-218-172-130.compute-1.amazonaws.com',
         'PORT': '5432',
     }
 }
@@ -140,3 +164,10 @@ try:
         django_heroku.settings(locals())
 except ImportError:
     found = False
+
+AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+        'allauth.account.auth_backends.AuthenticationBackend'
+    ]
+
+AUTH_USER_MODEL = "workplace_violation_app.CustomUser" 
