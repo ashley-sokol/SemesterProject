@@ -12,4 +12,7 @@ class CustomUser(AbstractUser):
 class AnonReportInfo(models.Model):
     report_date = models.DateField()
     report_text = models.TextField(null=False, blank= False)
-    report_image = models.ImageField()
+    report_file = models.FileField()
+
+    def __str__(self):
+        return f"Report from {self.report_date}"

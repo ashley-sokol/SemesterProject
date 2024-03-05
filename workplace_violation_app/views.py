@@ -14,23 +14,27 @@ class IndexView(generic.View):
     form = AnonymousForm()
     template_name = 'workplace_violation_app/index.html'
     def get(self, request):
-        return render(request, self.template_name, {'form': self.form})
+        form = AnonymousForm()
+        return render(request, self.template_name, {'form': form})
     
     def post(self,request):
-        form = AnonymousForm(request.POST)
+        form = AnonymousForm(request.POST,request.FILES)
         if form.is_valid():
             date = form.cleaned_data['report_date']
             text = form.cleaned_data['report_text']
-            image = form.cleaned_data['report_image']
+            file = form.cleaned_data['report_file']
 
-            anonymous_user = AnonReportInfo.objects.create(report_date =date,report_text=text,report_image=image)
+            anonymous_user = AnonReportInfo.objects.create(report_date =date,report_text=text,report_file=file)
 
             anonymous_user.save()
 
-            return HttpResponse("The data is saved. Thank you for your submission")
+            return render(request, 'workplace_violation_app/submission.html')
         
-        form = AnonymousForm()
-        return render(request, self.template_name, {'form': self.form})
+        else:
+            print("Form is not valid")
+            print("Errors:", form.errors)
+            
+            return render(request, self.template_name, {'form':form})
         
 class SubmissionsTableView(View):
     template_name = 'workplace_violation_app/submissions_table.html'
