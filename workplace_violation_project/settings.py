@@ -25,24 +25,23 @@ SECRET_KEY = 'django-insecure-rp7sg^vr13+elu5z@_9yh)pv^*m$kxn3w$+dc9!rs(y(r)f!c=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# AWS S3 SETTINGS
-AWS_ACCESS_KEY_ID = 'AKIA6GBMFKHWIDF4DUKU'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'workplaceviolationsubmissions'
+# AWS S3 SETTINGS FOR LOCAL TESTING
+# AWS_ACCESS_KEY_ID = 'AKIA6GBMFKHWIDF4DUKU'
+# AWS_SECRET_ACCESS_KEY = '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'
+# AWS_STORAGE_BUCKET_NAME = 'workplaceviolationsubmissions'
+# AWS_URL = 'https://workplaceviolationsubmissions.s3.amazonaws.com/'
+# AWS_DEFAULT_ACL = None
+# AWS_S3_REGION_NAME = 'us-east-1'
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_URL = 'https://workplaceviolationsubmissions.s3.amazonaws.com/'
 AWS_DEFAULT_ACL = None
 AWS_S3_REGION_NAME = 'us-east-1'
 AWS_S3_SIGNATURE_VERSION = 's3v4'
 
-if AWS_URL:
-    STATIC_URL = AWS_URL + '/static/'
-    MEDIA_URL = AWS_URL + '/media/'
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-else:
-    # If AWS_URL is not set, fall back to default static and media URLs
-    STATIC_URL = '/static/'
-    MEDIA_URL = '/media/'
-    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 ALLOWED_HOSTS = [
     'a28-workplace-violations-3cea70b449e2.herokuapp.com',
     '127.0.0.1', 'localhost',
