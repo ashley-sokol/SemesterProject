@@ -1,4 +1,10 @@
 {% extends 'workplace_violation_app/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+<link rel="stylesheet" href="{% static 'workplace_violation_app/style.css' %}">
 {% block content %}
 <div class="text-center">
     <h1>Current Reports</h1>

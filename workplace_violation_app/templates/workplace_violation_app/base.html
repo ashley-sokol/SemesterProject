@@ -1,7 +1,9 @@
+{% load static %}
 {% load socialaccount %}
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
+<link rel="stylesheet" href="{% static 'workplace_violation_app/style.css' %}">
 <html>
     <body>
         {% block content %}{% endblock %}

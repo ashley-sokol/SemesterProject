@@ -1,0 +1,23 @@
+body {
+    --background-color: #E3C3C4;
+    --header-color: #5B3734;
+    --text-color: #F0E6E8;
+    --button-color: #B35658;
+    --button-text: #F0E6E8;
+    --link-color: #C48284;
+    background-color: var(--background-color);
+    background-size:100% auto;
+    margin:0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--header-color);
+}
+
+a {
+    color: var(--link-color);
+}
+
+.nav_user {
+    color: var(--text-color);
+}
