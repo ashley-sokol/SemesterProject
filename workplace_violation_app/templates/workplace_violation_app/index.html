@@ -6,7 +6,23 @@
       <a href="{% url 'workplace_violation_app:login' %}" class="btn btn-outline-primary text-center">Login</a>
     {% endif %}
     <h2> Report a Violation</h2>
-    This will eventually have a form to submit the workplace violation.
+    <form action ="" method = "post" enctype="multipart/form-data">
+
+      {% csrf_token %}
+      {{form}}
+
+      <button type = "submit">Submit</button>
+
+    </form>
+
+    <!--{% if form.errors %}
+      <div class="error">
+        <p>There were some errors in your submission:</p>
+        {{ form.errors }}
+      </div>
+    {% endif %}
+
+    !-->
 
     {% if user.is_admin %}
       <a href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-primary text-center">View Current Reports</a>

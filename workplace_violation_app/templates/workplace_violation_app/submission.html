@@ -1,0 +1,10 @@
+{% extends 'workplace_violation_app/base.html' %}
+
+{% block content %}
+    <h1>The data is saved. Thank you for your submission</h1>
+    <form action="{% url 'workplace_violation_app:index'%}" method="get">
+        <button type="submit" >Back to Reporting Page</button>
+
+    </form>
+        
+{% endblock %}
