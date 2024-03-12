@@ -46,3 +46,9 @@ class SubmissionsTableView(View):
     template_name = 'workplace_violation_app/submissions_table.html'
     def get(self, request):
         return render(request, self.template_name)
+
+
+class SubmissionsView(View):
+    template_name = 'workplace_violation_app/user_submissions.html'
+    def get(self, request):
+        return render(request, self.template_name)
