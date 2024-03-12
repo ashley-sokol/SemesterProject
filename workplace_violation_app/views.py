@@ -6,7 +6,7 @@ from django.contrib.auth.views import LoginView as AuthLoginView
 from django.views import View
 from .forms import AnonymousForm
 from .models import AnonReportInfo
-from django.contrib.auth.decorators import user_passes_test
+from django.http import FileResponse
 
 class LoginView(AuthLoginView):
     template_name = 'workplace_violation_app/login.html'
@@ -44,3 +44,8 @@ class SubmissionsTableView(View):
         submissions = AnonReportInfo.objects.all().order_by('-report_date')
         context = {'submissions':submissions}
         return render(request, self.template_name, context)
+
+    def serve_file(self, request, file_path):
+        report_file = AnonReportInfo.objects.get(report_file=file_path)
+        response = FileResponse(report_file.report_file)
+        return response
