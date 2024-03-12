@@ -6,6 +6,7 @@ from django.contrib.auth.views import LoginView as AuthLoginView
 from django.views import View
 from .forms import AnonymousForm
 from .models import AnonReportInfo
+from django.contrib.auth.decorators import user_passes_test
 
 class LoginView(AuthLoginView):
     template_name = 'workplace_violation_app/login.html'
@@ -38,5 +39,13 @@ class IndexView(generic.View):
         
 class SubmissionsTableView(View):
     template_name = 'workplace_violation_app/submissions_table.html'
+
+    #The following is code that I can implement once the form is linked to a specific user. Ik Joel is handling it so I'll wait until its done to change anything.
+    #@user_passes_test(lambda user: user.is_admin, login_url='workplace_violation_app:login')
+    #def dispatch(self, request, *args, **kwargs):
+    #    return super().dispatch(request, *args, **kwargs)
+
     def get(self, request):
-        return render(request, self.template_name)
+        submissions = AnonReportInfo.objects.all().order_by('-report_date')
+        context = {'submissions':submissions}
+        return render(request, self.template_name, context)

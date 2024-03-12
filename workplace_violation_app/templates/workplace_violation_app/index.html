@@ -24,7 +24,7 @@
 
     !-->
 
-    {% if user.is_admin %}
+  {% if user.is_admin %}
       <a href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-primary text-center">View Current Reports</a>
     {% endif %}
 

@@ -2,6 +2,29 @@
 {% block content %}
 <div class="text-center">
     <h1>Current Reports</h1>
-    This will eventually display a table of current reports only visible to admin users. Right now anyone can technically access this but we will fix it.
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Report Date</th>
+                <th> Report Text</th>
+                <th> Attached File</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for report in submissions %}
+            <tr>
+                <td> {{ report.report_date }}</td>
+                <td> {{ report.report_text }}</td>
+                <td>
+                    {% if report.report_file %}
+                        <a href="{{ report.report_file.url }}" target="_blank"> {{ report.report_file }}</a>
+                    {% else %}
+                        No file Attached
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
