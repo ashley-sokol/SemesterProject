@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 #test
 import os
+import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -128,9 +129,13 @@ DATABASES = {
         'PASSWORD': 'ab8d8501634236a800366e1077a02dde57aca34d80ee3cc7b75c31f35dd7d9e9',
         'HOST': 'ec2-3-218-172-130.compute-1.amazonaws.com',
         'PORT': '5432',
+
     }
+
 }
 
+if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
