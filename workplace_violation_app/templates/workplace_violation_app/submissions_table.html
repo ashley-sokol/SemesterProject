@@ -17,8 +17,7 @@
                 <td> {{ report.report_text }}</td>
                 <td>
                     {% if report.report_file %}
-
-                        {{ report.report_file }}
+                        <a href="{{ report.report_file.url }}" target="_blank">{{ report.report_file.name }}</a>
                     {% else %}
                         No file Attached
                     {% endif %}

@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse
@@ -7,6 +7,7 @@ from django.views import View
 from .forms import AnonymousForm
 from .models import AnonReportInfo
 from django.http import FileResponse
+from django.shortcuts import get_object_or_404
 
 class LoginView(AuthLoginView):
     template_name = 'workplace_violation_app/login.html'
@@ -40,12 +41,22 @@ class IndexView(generic.View):
 class SubmissionsTableView(View):
     template_name = 'workplace_violation_app/submissions_table.html'
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
+        file_path = kwargs.get('file_path')
+
+        if file_path:
+            report_file = get_object_or_404(AnonReportInfo, report_file=file_path)
+            s3_url = report_file.url
+            return HttpResponseRedirect(s3_url)
+
         submissions = AnonReportInfo.objects.all().order_by('-report_date')
-        context = {'submissions':submissions}
+        context = {'submissions': submissions}
         return render(request, self.template_name, context)
 
-    def serve_file(self, request, file_path):
-        report_file = AnonReportInfo.objects.get(report_file=file_path)
-        response = FileResponse(report_file.report_file)
-        return response
+    # def serve_file(self, request, file_path):
+    #     #report_file = AnonReportInfo.objects.get(report_file=file_path)
+    #     report_file = get_object_or_404(AnonReportInfo, report_info=file_path)
+    #     s3_url = report_file.report_file.url
+    #
+    #     #response = FileResponse(report_file.report_file)
+    #     return HttpResponse(s3_url)
