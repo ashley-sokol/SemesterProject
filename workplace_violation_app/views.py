@@ -1,5 +1,9 @@
+import base64
+
+import boto3
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.template.response import TemplateResponse
 from django.views import generic
 from django.urls import reverse
 from django.contrib.auth.views import LoginView as AuthLoginView
@@ -37,10 +41,10 @@ class IndexView(generic.View):
             print("Errors:", form.errors)
             
             return render(request, self.template_name, {'form':form})
-        
+
+
 class SubmissionsTableView(View):
     template_name = 'workplace_violation_app/submissions_table.html'
-
     def get(self, request, *args, **kwargs):
         file_path = kwargs.get('file_path')
 
