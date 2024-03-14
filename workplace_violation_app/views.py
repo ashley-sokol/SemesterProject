@@ -53,10 +53,3 @@ class SubmissionsTableView(View):
         context = {'submissions': submissions}
         return render(request, self.template_name, context)
 
-    # def serve_file(self, request, file_path):
-    #     #report_file = AnonReportInfo.objects.get(report_file=file_path)
-    #     report_file = get_object_or_404(AnonReportInfo, report_info=file_path)
-    #     s3_url = report_file.report_file.url
-    #
-    #     #response = FileResponse(report_file.report_file)
-    #     return HttpResponse(s3_url)
