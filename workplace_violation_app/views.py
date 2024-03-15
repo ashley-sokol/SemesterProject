@@ -57,3 +57,4 @@ class SubmissionsTableView(View):
         context = {'submissions': submissions}
         return render(request, self.template_name, context)
 
+    #<a href="{{ report.report_file.url }}" target="_blank">Open in New Tab</a>
