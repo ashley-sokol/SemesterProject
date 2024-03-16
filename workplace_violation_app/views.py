@@ -56,5 +56,3 @@ class SubmissionsTableView(View):
         submissions = AnonReportInfo.objects.all().order_by('-report_date')
         context = {'submissions': submissions}
         return render(request, self.template_name, context)
-
-    #<a href="{{ report.report_file.url }}" target="_blank">Open in New Tab</a>
