@@ -1,11 +1,17 @@
-from django.http import HttpResponse
+import base64
+
+import boto3
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.template.response import TemplateResponse
 from django.views import generic
 from django.urls import reverse
 from django.contrib.auth.views import LoginView as AuthLoginView
 from django.views import View
 from .forms import AnonymousForm
 from .models import AnonReportInfo
+from django.http import FileResponse
+from django.shortcuts import get_object_or_404
 
 class LoginView(AuthLoginView):
     template_name = 'workplace_violation_app/login.html'
@@ -35,14 +41,18 @@ class IndexView(generic.View):
             print("Errors:", form.errors)
             
             return render(request, self.template_name, {'form':form})
-        
+
+
 class SubmissionsTableView(View):
     template_name = 'workplace_violation_app/submissions_table.html'
-    def get(self, request):
-        return render(request, self.template_name)
+    def get(self, request, *args, **kwargs):
+        file_path = kwargs.get('file_path')
 
+        if file_path:
+            report_file = get_object_or_404(AnonReportInfo, report_file=file_path)
+            s3_url = report_file.url
+            return HttpResponseRedirect(s3_url)
 
-class SubmissionsView(View):
-    template_name = 'workplace_violation_app/user_submissions.html'
-    def get(self, request):
-        return render(request, self.template_name)
+        submissions = AnonReportInfo.objects.all().order_by('-report_date')
+        context = {'submissions': submissions}
+        return render(request, self.template_name, context)
