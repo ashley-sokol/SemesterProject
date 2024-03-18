@@ -1,7 +1,9 @@
+{% load static %}
 {% load socialaccount %}
 {% load bootstrap5 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
+<link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
 <html>
     <body>
         {% block content %}{% endblock %}

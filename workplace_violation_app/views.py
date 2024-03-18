@@ -7,6 +7,7 @@ from django.template.response import TemplateResponse
 from django.views import generic
 from django.urls import reverse
 from django.contrib.auth.views import LoginView as AuthLoginView
+from django.contrib.auth import logout
 from django.views import View
 from .forms import AnonymousForm
 from .models import AnonReportInfo
@@ -15,6 +16,10 @@ from django.shortcuts import get_object_or_404
 
 class LoginView(AuthLoginView):
     template_name = 'workplace_violation_app/login.html'
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("workplace_violation_app:index"))  
 
 class IndexView(generic.View):
     form = AnonymousForm()
