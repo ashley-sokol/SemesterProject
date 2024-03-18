@@ -13,4 +13,5 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="login.html")),
     path('accounts/', include('allauth.urls')),
     path('logout/', logout_view, name='logout')
+    path('submissions_table/serve_file/<str:file_path>/', SubmissionsTableView.as_view(), name='serve_file'),
 ]

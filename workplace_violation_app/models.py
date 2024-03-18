@@ -6,7 +6,6 @@ from storages.backends.s3boto3 import S3Boto3Storage
 
 class CustomUser(AbstractUser):
     is_admin = models.BooleanField(default=False)
-
     def __str__(self):
         return self.username
 
@@ -17,6 +16,8 @@ class AnonReportInfo(models.Model):
     report_date = models.DateField()
     report_text = models.TextField(null=False, blank= False)
     report_file = models.FileField(storage=CustomS3Storage())    #Should save in Amazon s3 bucket
+
+    is_seen = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Report from {self.report_date}"
