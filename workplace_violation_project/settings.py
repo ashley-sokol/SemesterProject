@@ -124,10 +124,10 @@ WSGI_APPLICATION = 'workplace_violation_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dah5ssulc1rkmj',
-        'USER': 'semqpddyuzflik',
-        'PASSWORD': 'ab8d8501634236a800366e1077a02dde57aca34d80ee3cc7b75c31f35dd7d9e9',
-        'HOST': 'ec2-3-218-172-130.compute-1.amazonaws.com',
+        'NAME': 'd1jkuapa3p4uha',
+        'USER': 'nwpmdxfyzueciz',
+        'PASSWORD': 'ec6372b3094702789358665ad32ea7e33847fe729cf64043fbe9d1398c7b50aa',
+        'HOST': 'ec2-34-193-110-25.compute-1.amazonaws.com',
         'PORT': '5432',
 
     }
