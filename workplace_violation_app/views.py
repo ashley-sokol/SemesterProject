@@ -10,7 +10,7 @@ from django.contrib.auth.views import LoginView as AuthLoginView
 from django.contrib.auth import logout
 from django.views import View
 from .forms import AnonymousForm
-from .models import AnonReportInfo
+from .models import Report
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404
 
@@ -35,7 +35,7 @@ class IndexView(generic.View):
             text = form.cleaned_data['report_text']
             file = form.cleaned_data['report_file']
 
-            anonymous_user = AnonReportInfo.objects.create(report_date =date,report_text=text,report_file=file)
+            anonymous_user = Report.objects.create(report_date =date, report_text=text, report_file=file)
 
             anonymous_user.save()
 
@@ -54,10 +54,10 @@ class SubmissionsTableView(View):
         file_path = kwargs.get('file_path')
 
         if file_path:
-            report_file = get_object_or_404(AnonReportInfo, report_file=file_path)
+            report_file = get_object_or_404(Report, report_file=file_path)
             s3_url = report_file.url
             return HttpResponseRedirect(s3_url)
 
-        submissions = AnonReportInfo.objects.all().order_by('-report_date')
+        submissions = Report.objects.all().order_by('-report_date')
         context = {'submissions': submissions}
         return render(request, self.template_name, context)

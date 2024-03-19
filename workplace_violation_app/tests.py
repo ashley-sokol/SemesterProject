@@ -1,5 +1,5 @@
 from django.test import TestCase
-from workplace_violation_app.models import AnonReportInfo
+from workplace_violation_app.models import Report
 from workplace_violation_app.models import CustomUser
 from django.utils import timezone
 from storages.backends.s3boto3 import S3Boto3Storage

@@ -1,5 +1,5 @@
 from django import forms
-from .models import AnonReportInfo
+from .models import Report
 
 class AnonymousForm(forms.Form):
      report_date = forms.DateField()
