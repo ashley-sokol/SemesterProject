@@ -11,12 +11,12 @@
 <div class="text-center">
     <h1>Welcome To The Login Page</h1>
     <h2>Please login below</h2>
-<!--        {% if user.is_authenticated %}-->
-<!--            {% if user.is_admin %}-->
-<!--                <p class="text-primary ">Welcome, {{user.username}}, you are logged in as an admin.</p>-->
-<!--            {% else %}-->
-<!--                <p>Welcome, {{user.username}}, you are logged in as a common user.</p>-->
-<!--            {% endif %}-->
+        {% if user.is_authenticated %}
+            {% if user.is_admin %}
+                <p class="text-primary ">{{user.username}}, you are logged in as an admin.</p>
+            {% else %}
+                <p> {{user.username}}, you are logged in as a common user.</p>
+            {% endif %}
             <a href="{% url 'workplace_violation_app:index' %}">Go to Home page</a>
         {% else %}
             <a href="{% provider_login_url 'google' %}">Login With Google</a>
