@@ -28,21 +28,21 @@ SECRET_KEY = 'django-insecure-rp7sg^vr13+elu5z@_9yh)pv^*m$kxn3w$+dc9!rs(y(r)f!c=
 DEBUG = True
 
 # AWS S3 SETTINGS FOR LOCAL TESTING
-# AWS_ACCESS_KEY_ID = 'AKIA6GBMFKHWIDF4DUKU'
-# AWS_SECRET_ACCESS_KEY = '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'
-# AWS_STORAGE_BUCKET_NAME = 'workplaceviolationsubmissions'
-# AWS_URL = 'https://workplaceviolationsubmissions.s3.amazonaws.com/'
-# AWS_DEFAULT_ACL = None
-# AWS_S3_REGION_NAME = 'us-east-1'
-# AWS_S3_SIGNATURE_VERSION = 's3v4'
-
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = 'AKIA6GBMFKHWIDF4DUKU'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'workplaceviolationsubmissions'
 AWS_URL = 'https://workplaceviolationsubmissions.s3.amazonaws.com/'
 AWS_DEFAULT_ACL = None
 AWS_S3_REGION_NAME = 'us-east-1'
 AWS_S3_SIGNATURE_VERSION = 's3v4'
+#
+# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+# AWS_URL = 'https://workplaceviolationsubmissions.s3.amazonaws.com/'
+# AWS_DEFAULT_ACL = None
+# AWS_S3_REGION_NAME = 'us-east-1'
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
 
 ALLOWED_HOSTS = [
     'a28-workplace-violations-3cea70b449e2.herokuapp.com',
