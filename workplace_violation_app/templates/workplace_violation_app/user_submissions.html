@@ -1,11 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Submissions</title>
-  #Insert table with user submissions here and the ability to delete submissions
-</head>
-<body>
+{% extends 'workplace_violation_app/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+{% csrf_token %}
+<link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
+{% block content %}
+<div class="text-center">
+    <h1>Your Submitted Reports</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Report Date</th>
+                <th> Report Text</th>
+                <th> Attached File</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for report in submissions %}
+            <tr>
+                <td> {{ report.report_date }}</td>
+                <td> {{ report.report_text }}</td>
+                <td>
+                    {% if report.report_file %}
+                        {% with file_extension=report.report_file.name|slice:'-4:'|lower %}
+                            {% if file_extension == '.pdf' %}
+                                <embed src="{{ report.report_file.url }}" width="100%" height="600px" type="application/pdf" />
+                            {% elif file_extension == '.jpg' or file_extension == 'jpeg' %}
+                                <img src="{{ report.report_file.url }}" alt="{{ report.report_file.name }}"/>
+                            {% elif file_extension == '.txt' %}
+                                <iframe src="{{ report.report_file.url }}" width="100%" height="600px"></iframe>
+                            {% else %}
+                                <p>Unsupported file type: {{ report.report_file.name }}</p>
+                            {% endif %}
+                        {% endwith %}
+                    {% else %}
+                        No file Attached
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not report.seen %}
+                        {% csrf_token %}
+                        <p1>New</p1>
+                    {% else %}
+                        Seen
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="post" action="{% url 'workplace_violation_app:delete_submission' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="report_id" value="{{ report.id }}">
+                        <button type="submit" class="btn btn-outline-danger text-dark text-center">Delete Submission</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-</body>
-</html>
+{% endblock %}
