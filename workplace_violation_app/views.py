@@ -31,11 +31,12 @@ class IndexView(generic.View):
     def post(self,request):
         form = AnonymousForm(request.POST,request.FILES)
         if form.is_valid():
+            user = request.user
             date = form.cleaned_data['report_date']
             text = form.cleaned_data['report_text']
             file = form.cleaned_data['report_file']
 
-            anonymous_user = Report.objects.create(report_date =date, report_text=text, report_file=file)
+            anonymous_user = Report.objects.create(report_user=user,report_date =date, report_text=text, report_file=file)
 
             anonymous_user.save()
 

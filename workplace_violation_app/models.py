@@ -13,6 +13,7 @@ class CustomS3Storage(S3Boto3Storage):
     location = 'media'
     file_overwrite = False
 class Report(models.Model): #previously anonreportinfo
+    report_user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)  #Added for common user submissions
     report_date = models.DateField()
     report_text = models.TextField(null=False, blank= False)
     report_file = models.FileField(storage=CustomS3Storage())    #Should save in Amazon s3 bucket
