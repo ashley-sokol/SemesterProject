@@ -28,10 +28,11 @@
 
     !-->
     {% if user.is_authenticated %}
-  {% if not user.is_admin %}
+    {% if not user.is_admin %}
       <a href="{% url 'workplace_violation_app:user_submissions' %}" class="btn btn-outline-primary text-center">View Submitted Reports</a>
-    {% endif %}
+    {% else %}
       <a href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-primary text-center">View All Reports</a>
+    {% endif %}
     {% endif %}
 
 

@@ -13,7 +13,7 @@
     <h2>Please login below</h2>
         {% if user.is_authenticated %}
             {% if user.is_admin %}
-                <p>Welcome, {{user.username}}, you are logged in as an admin.</p>
+                <p class="text-primary ">Welcome, {{user.username}}, you are logged in as an admin.</p>
             {% else %}
                 <p>Welcome, {{user.username}}, you are logged in as a common user.</p>
             {% endif %}
