@@ -8,16 +8,48 @@
 {% block content %}
 <div class="container-fluid body">
   <div class="text-center">
-    <h1>Hello Welcome to the App</h1>
-    <h2> Report a Violation</h2>
-    <form action ="" method = "post" enctype="multipart/form-data">
+    <div class="title p-3">
+      <h1>Workplace Violation Reporter</h1>
+    </div>
+    <div class="row">
+      <div class="container col-md-4 border rounded bg-body" style="text-align:left;">
+        <h3> Report a Violation</h3>
+        <form action ="" method = "post" enctype="multipart/form-data">
 
-      {% csrf_token %}
-      {{form}}
+          {% csrf_token %}
+          {{form}}
+    
+          <button type = "submit">Submit</button>
+    
+        </form>
+      </div>
+      <div class="col-md-2 p-3">
+        {% if user.is_admin %}
+          <a href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-danger text-center m-3">View reports as admin</a>
+        {% endif %}
+        {% if user.is_authenticated %}
+          <a href="#" class="btn btn-outline-danger text-center m-3">View my submissions</a>
+        {% endif %}
+        <div>
+          <input placeholder="Enter case number" class="mt-5"></input>
+          <button class="btn-danger mt-2">Find case</button>
+        </div>
+        
+      </div>
+      <div class="container col-md-4" style="text-align:left;">
+        <div class="card">
+          <img class="card-img-top" src="{% static '/admin/img/construction_stock_photo.jpg' %}" alt="img">
+          <div class="card-body">
+            <h4 class="card-title">Learn about reporting</h4>
+            <p class="card-text">It is your right as an employee to fair treatment and safe working conditions - our application is here to provide you with a quick, actionable, and reliable method of submitting workplace violations. Not sure what exactly a workplace violation is, or just interested in learning how to report?</p>
+            <a href="#" class="btn btn-danger">Learn more</a>
+          </div>
+        </div>
+        <div class="">
 
-      <button type = "submit">Submit</button>
-
-    </form>
+        </div>
+      </div>
+    </div>
 
     <!--{% if form.errors %}
       <div class="error">
@@ -27,18 +59,7 @@
     {% endif %}
 
     !-->
-    {% if user.is_authenticated %}
-    {% if not user.is_admin %}
-      <a href="{% url 'workplace_violation_app:user_submissions' %}" class="btn btn-outline-primary text-center">View Submitted Reports</a>
-    {% else %}
-      <a href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-primary text-center">View All Reports</a>
-    {% endif %}
-    {% endif %}
-
-
-
-
-
+    
   </div>
 </div>
 {% endblock %}
