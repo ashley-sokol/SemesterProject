@@ -61,3 +61,53 @@ class SubmissionsTableView(View):
         submissions = Report.objects.all().order_by('-report_date')
         context = {'submissions': submissions}
         return render(request, self.template_name, context)
+
+    class SubmissionsTableView(View):
+        template_name = 'workplace_violation_app/submissions_table.html'
+
+        def get(self, request, *args, **kwargs):
+            file_path = kwargs.get('file_path')
+
+            if file_path:
+                report_file = get_object_or_404(Report, report_file=file_path)
+                s3_url = report_file.url
+                return HttpResponseRedirect(s3_url)
+
+            submissions = Report.objects.all().order_by('-report_date')
+            context = {'submissions': submissions}
+            return render(request, self.template_name, context)
+class UserSubmissionsTableView(View):
+    template_name = 'workplace_violation_app/user_submissions.html'
+    def get(self, request, *args, **kwargs):
+        file_path = kwargs.get('file_path')
+
+        if file_path:
+            report_file = get_object_or_404(Report, report_file=file_path)
+            s3_url = report_file.url
+            return HttpResponseRedirect(s3_url)
+
+        submissions = Report.objects.all().order_by('-report_date')
+        context = {'submissions': submissions}
+        return render(request, self.template_name, context)
+class DeleteSubmission(View):
+    template_name = 'workplace_violation_app/user_submissions.html'
+    def post(self, request, *args, **kwargs):
+        report_id = request.POST.get('report_id')
+        if report_id:
+            report = get_object_or_404(Report, id=report_id)
+            report.delete()
+            submissions = Report.objects.all().order_by('-report_date')
+            context = {'submissions': submissions}
+            return render(request, self.template_name, context)
+        else:
+            submissions = Report.objects.all().order_by('-report_date')
+            context = {'submissions': submissions}
+            return render(request, self.template_name, context)
+    # def get(self, request, *args, **kwargs):
+    #     file_path = kwargs.get('file_path')
+    #     report_id = request.GET.get('report_id')
+    #     report = get_object_or_404(Report, id=report_id)
+    #     report.delete()
+        submissions = Report.objects.all().order_by('-report_date')
+        context = {'submissions': submissions}
+        return render(request, self.template_name, context)

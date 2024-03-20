@@ -6,29 +6,6 @@
 {% bootstrap_messages %}
 <link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
 {% block content %}
-<nav class="navbar navbar-expand-sm bg-dark">
-  <div class="container-fluid">
-    <ul class="navbar-nav">
-      <a class="navbar-brand" href="{% url 'workplace_violation_app:index' %}">
-        <img src="{% static '/admin/img/logo.png' %}" alt="Avatar Logo" style="width:40px;" class="rounded-pill"> 
-      </a>
-      {% if not user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'workplace_violation_app:login' %}" class="btn btn-outline-primary text-center">Log in</a>
-      </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'workplace_violation_app:logout' %}" class="btn btn-outline-primary text-center">Log out</a>
-      </li>
-      {% endif %}
-    </ul>
-    {% if user.is_authenticated %}
-    <ul class="navbar-nav navbar-right">
-      <li class="text-white">Welcome, {{ user.username }}. You have logged in. </li>
-    </ul>
-    {% endif %}
-  </div>
-</nav>
 <div class="container-fluid body">
   <div class="text-center">
     <h1>Hello Welcome to the App</h1>
@@ -50,12 +27,17 @@
     {% endif %}
 
     !-->
-  {% if not user.is_admin %}
-      <a href="{% url 'workplace_violation_app:common_submissions_table' %}" class="btn btn-outline-primary text-center">View Submitted Reports</a>
+    {% if user.is_authenticated %}
+    {% if not user.is_admin %}
+      <a href="{% url 'workplace_violation_app:user_submissions' %}" class="btn btn-outline-primary text-center">View Submitted Reports</a>
+    {% else %}
+      <a href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-primary text-center">View All Reports</a>
     {% endif %}
-  {% if user.is_admin %}
-      <a href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-primary text-center">View Current Reports</a>
     {% endif %}
+
+
+
+
 
   </div>
 </div>
