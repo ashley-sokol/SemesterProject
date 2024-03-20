@@ -31,17 +31,25 @@ class IndexView(generic.View):
     def post(self,request):
         form = AnonymousForm(request.POST,request.FILES)
         if form.is_valid():
-            user = request.user
-            date = form.cleaned_data['report_date']
-            text = form.cleaned_data['report_text']
-            file = form.cleaned_data['report_file']
+            if request.user.is_authenticated:
+                user = request.user
+                date = form.cleaned_data['report_date']
+                text = form.cleaned_data['report_text']
+                file = form.cleaned_data['report_file']
 
-            anonymous_user = Report.objects.create(report_user=user,report_date =date, report_text=text, report_file=file)
+                anonymous_user = Report.objects.create(report_user=user,report_date =date, report_text=text, report_file=file)
 
-            anonymous_user.save()
+                anonymous_user.save()
 
-            return render(request, 'workplace_violation_app/submission.html')
-        
+                return render(request, 'workplace_violation_app/submission.html')
+            else:
+                date = form.cleaned_data['report_date']
+                text = form.cleaned_data['report_text']
+                file = form.cleaned_data['report_file']
+
+                anonymous_user = Report.objects.create(report_date=date, report_text=text,report_file=file)
+                anonymous_user.save()
+                return render(request, 'workplace_violation_app/submission.html')
         else:
             print("Form is not valid")
             print("Errors:", form.errors)
