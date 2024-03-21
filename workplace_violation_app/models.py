@@ -21,7 +21,7 @@ class Report(models.Model): #previously anonreportinfo
     report_text = models.TextField(null=True, blank= False)
     report_file = models.FileField(storage=CustomS3Storage())    #Should save in Amazon s3 bucket
     report_status = models.CharField(max_length=100, default='New')  # status of report
-    report_number=models.UUIDField(primary_key=True,editable=False)
+    report_number=models.UUIDField(primary_key=True,editable=False, default=uuid.uuid4, unique=True)
     is_seen = models.BooleanField(default=False)
 
     def __str__(self):

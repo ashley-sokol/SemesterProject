@@ -58,8 +58,12 @@ class IndexView(generic.View):
 
 class ViewReportView(View):
     template_name = 'workplace_violation_app/view_report.html'
+
     def get(self, request, report_number, *args, **kwargs):
         report = get_object_or_404(Report, pk=report_number)
+        if report.report_status == "New" or report.report_status == "new" :
+            report.report_status = "In Progress"
+            report.save()
         return render(request, self.template_name, {'report':report})
 
 class SubmissionsTableView(View):
@@ -68,32 +72,6 @@ class SubmissionsTableView(View):
         submissions = Report.objects.all().order_by('-report_date')
         context = {'submissions':submissions}
         return render(request, self.template_name, context)
-    # def get(self, request, *args, **kwargs):
-    #     file_path = kwargs.get('file_path')
-    #
-    #     if file_path:
-    #         report_file = get_object_or_404(Report, report_file=file_path)
-    #         s3_url = report_file.url
-    #         return HttpResponseRedirect(s3_url)
-    #
-    #     submissions = Report.objects.all().order_by('-report_date')
-    #     context = {'submissions': submissions}
-    #     return render(request, self.template_name, context)
-# {% if report.report_file %}
-#                         {% with file_extension=report.report_file.name|slice:'-4:'|lower %}
-#                             {% if file_extension == '.pdf' %}
-#                                 <embed src="{{ report.report_file.url }}" width="100%" height="600px" type="application/pdf" />
-#                             {% elif file_extension == '.jpg' or file_extension == 'jpeg' %}
-#                                 <img src="{{ report.report_file.url }}" alt="{{ report.report_file.name }}"/>
-#                             {% elif file_extension == '.txt' %}
-#                                 <iframe src="{{ report.report_file.url }}" width="100%" height="600px"></iframe>
-#                             {% else %}
-#                                 <p>Unsupported file type: {{ report.report_file.name }}</p>
-#                             {% endif %}
-#                         {% endwith %}
-#                     {% else %}
-#                         No file Attached
-#                     {% endif %}
 
 class UserSubmissionsTableView(View):
     template_name = 'workplace_violation_app/user_submissions.html'

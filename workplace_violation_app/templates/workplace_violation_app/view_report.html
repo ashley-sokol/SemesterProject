@@ -5,13 +5,21 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 {% block content %}
-<div class="text-center">
-    <h1>Report Details: {{ report_number }}</h1>
+<div>
+    <h1>Report Details:</h1>
     <div>
-        <h3>Report Date: {{ report.report_date }}</h3>
-        <p>Report Text: {{ report.report_text }}</p>
+        <h3> Case Number: {{ report.report_number }}</h3>
+        <h3>Date: {{ report.report_date }}</h3>
+        <p> <strong>Text: </strong> {{ report.report_text }}</p>
+
     </div>
     <div>
+        {% if report.report_file %}
+        <button id="view-file-btn" class="btn-danger mt-2">View File</button>
+        {% else %}
+            <p> No file attached </p>
+        {% endif %}
+        <div id="embedded_file" style = "display: none;">
         {% if report.report_file %}
             {% with file_extension=report.report_file.name|slice:'-4:'|lower %}
                 {% if file_extension == '.pdf' %}
@@ -27,6 +35,12 @@
         {% else %}
             <p>No file attached</p>
         {% endif %}
+        </div>
     </div>
 </div>
+<script>
+    document.getElementById('view-file-btn').addEventListener('click', function() {
+        document.getElementById('embedded_file').style.display = 'block';
+    });
+</script>
 {% endblock %}

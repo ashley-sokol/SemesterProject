@@ -13,6 +13,7 @@
             <tr>
                 <th>Report Date</th>
                 <th> Report Status</th>
+                <th> Report Number </th>
                 <th> View Report</th>
             </tr>
         </thead>
@@ -21,6 +22,7 @@
             <tr>
                 <td> {{ report.report_date }}</td>
                 <td> {{ report.report_status }}</td>
+                <td>{{ report.report_number}}</td>
                 <td>
                     <a href="{% url 'workplace_violation_app:view_report' report_number=report.pk %}">View</a>
                 </td>
