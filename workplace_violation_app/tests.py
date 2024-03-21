@@ -21,7 +21,7 @@ class CustomUserTest(TestCase):
         user=CustomUser.objects.create(username="hello")
         user.is_admin=True
         self.assertTrue(user.is_admin)
-class AnonReportInfoTest(TestCase):
+class ReportTest(TestCase):
     #practice test to ensure github actions is working. can delete later in the project
     def test_true(self):
         self.assertTrue(True)
