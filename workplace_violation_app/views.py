@@ -56,35 +56,23 @@ class IndexView(generic.View):
             
             return render(request, self.template_name, {'form':form})
 
+class ViewReportView(View):
+    template_name = 'workplace_violation_app/view_report.html'
+
+    def get(self, request, report_number, *args, **kwargs):
+        report = get_object_or_404(Report, pk=report_number)
+        if report.report_status == "New" or report.report_status == "new" :
+            report.report_status = "In Progress"
+            report.save()
+        return render(request, self.template_name, {'report':report})
 
 class SubmissionsTableView(View):
     template_name = 'workplace_violation_app/submissions_table.html'
     def get(self, request, *args, **kwargs):
-        file_path = kwargs.get('file_path')
-
-        if file_path:
-            report_file = get_object_or_404(Report, report_file=file_path)
-            s3_url = report_file.url
-            return HttpResponseRedirect(s3_url)
-
         submissions = Report.objects.all().order_by('-report_date')
-        context = {'submissions': submissions}
+        context = {'submissions':submissions}
         return render(request, self.template_name, context)
 
-    class SubmissionsTableView(View):
-        template_name = 'workplace_violation_app/submissions_table.html'
-
-        def get(self, request, *args, **kwargs):
-            file_path = kwargs.get('file_path')
-
-            if file_path:
-                report_file = get_object_or_404(Report, report_file=file_path)
-                s3_url = report_file.url
-                return HttpResponseRedirect(s3_url)
-
-            submissions = Report.objects.all().order_by('-report_date')
-            context = {'submissions': submissions}
-            return render(request, self.template_name, context)
 class UserSubmissionsTableView(View):
     template_name = 'workplace_violation_app/user_submissions.html'
     def get(self, request, *args, **kwargs):

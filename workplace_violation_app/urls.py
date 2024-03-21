@@ -14,5 +14,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('logout/', logout_view, name='logout'),
     path('submissions_table/serve_file/<str:file_path>/', SubmissionsTableView.as_view(), name='serve_file'),
-    path('delete_submission', DeleteSubmission.as_view(), name="delete_submission")
+    path('delete_submission', DeleteSubmission.as_view(), name="delete_submission"),
+    path('view_report/<uuid:report_number>/', ViewReportView.as_view(), name='view_report'),
 ]
