@@ -28,7 +28,7 @@
           <a href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-danger text-center m-3">View reports as admin</a>
         {% endif %}
         {% if user.is_authenticated %}
-          <a href="#" class="btn btn-outline-danger text-center m-3">View my submissions</a>
+          <a href="{% url 'workplace_violation_app:user_submissions' %}" class="btn btn-outline-danger text-center m-3">View my submissions</a>
         {% endif %}
         <div>
           <input placeholder="Enter case number" class="mt-5"></input>
