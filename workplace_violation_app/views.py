@@ -200,3 +200,9 @@ class DeleteSubmission(View):
         submissions = Report.objects.all().order_by('-report_date')
         context = {'submissions': submissions}
         return render(request, self.template_name, context)
+
+class InfoView(View):
+    template_name = 'workplace_violation_app/info.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
