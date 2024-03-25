@@ -24,5 +24,7 @@ class Report(models.Model): #previously anonreportinfo
     report_number=models.UUIDField(primary_key=True,editable=False, default=uuid.uuid4, unique=True)
     is_seen = models.BooleanField(default=False)
 
+    admin_notes = models.TextField(null= True,blank = True)
+
     def __str__(self):
         return f"Report from {self.report_date}"

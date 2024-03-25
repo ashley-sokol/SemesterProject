@@ -6,10 +6,16 @@ class AnonymousForm(forms.Form):
      report_text = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter detailed report here.', 'style': 'height: 300px;', 'class': 'form-control'}))
      report_file = forms.FileField(required=False, widget=forms.FileInput(attrs={'class': 'form-control-file'}))
 
-
-     # def cleaned_data(self):
-     #    cleaned_data = super().clean()
-     #    file = cleaned_data.get("report_file")
-     
-     #    if form.is_valid():
+class AdminNotesForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ['admin_notes']
+        widgets = {
+            'admin_notes': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Enter notes here...'}),
+        }
+   
+   
+   
+   
+   
 
