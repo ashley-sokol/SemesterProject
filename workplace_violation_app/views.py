@@ -13,6 +13,8 @@ from .forms import AnonymousForm
 from .models import Report
 from django.http import FileResponse
 from django.shortcuts import get_object_or_404
+from .forms import AdminNotesForm
+from django.shortcuts import redirect
 
 class LoginView(AuthLoginView):
     template_name = 'workplace_violation_app/login.html'
@@ -61,10 +63,26 @@ class ViewReportView(View):
 
     def get(self, request, report_number, *args, **kwargs):
         report = get_object_or_404(Report, pk=report_number)
+        notes_form = AdminNotesForm(instance=report)
         if report.report_status == "New" or report.report_status == "new" :
             report.report_status = "In Progress"
             report.save()
-        return render(request, self.template_name, {'report':report})
+        return render(request, self.template_name, {'report':report, 'notes_form': notes_form})
+    
+    def post(self, request, report_number, *args, **kwargs):
+        report = get_object_or_404(Report, pk=report_number)
+        notes_form = AdminNotesForm(request.POST, instance=report)
+        if notes_form.is_valid():
+            notes_form.save()
+            return redirect('workplace_violation_app:view_report', report_number=report_number)
+        return render(request, self.template_name, {'report': report, 'notes_form': notes_form})
+    
+    def mark_as_resolved(request, report_number):
+        report = get_object_or_404(Report, report_number=report_number)
+        report.report_status = 'Resolved'
+        report.save()
+        return redirect('workplace_violation_app:submissions_table')
+
 
 class SubmissionsTableView(View):
     template_name = 'workplace_violation_app/submissions_table.html'
@@ -72,6 +90,16 @@ class SubmissionsTableView(View):
         submissions = Report.objects.all().order_by('-report_date')
         context = {'submissions':submissions}
         return render(request, self.template_name, context)
+    
+class ReportActionView(View):
+    template_name = 'workplace_violation_app/report_action.html'
+
+    def get(self, request, report_number, *args, **kwargs):
+        report = get_object_or_404(Report, pk=report_number,report_user=request.user)
+        return render(request,self.template_name, {'report':report})
+
+    
+    
 
 class UserSubmissionsTableView(View):
     template_name = 'workplace_violation_app/user_submissions.html'

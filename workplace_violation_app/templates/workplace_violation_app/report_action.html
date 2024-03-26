@@ -1,0 +1,11 @@
+{% extends 'workplace_violation_app/base.html' %}
+{% block content %}
+<div class="container">
+    <h2>Admin Action:</h2>
+    <p><strong>Date:</strong> {{ report.report_date }}</p>
+    <p><strong>Report Text:</strong> {{ report.report_text }}</p>
+    <h3>Admin Notes:</h3> 
+    <p>{{ report.admin_notes }}</p>
+
+</div>
+{% endblock %}

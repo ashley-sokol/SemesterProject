@@ -45,7 +45,7 @@
                 <td>
                     {% if not report.seen %}
                         {% csrf_token %}
-                        <p1>New</p1>
+                        {{ report.report_status }}
                     {% else %}
                         Seen
                     {% endif %}
@@ -55,6 +55,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="report_id" value="{{ report.id }}">
                         <button type="submit" class="btn btn-outline-danger text-dark text-center">Delete Submission</button>
+                        <a href="{% url 'workplace_violation_app:view_action' report.report_number %}" class="btn btn-info">View Action</a>
                     </form>
                 </td>
             </tr>
