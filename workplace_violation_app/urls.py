@@ -16,4 +16,6 @@ urlpatterns = [
     path('submissions_table/serve_file/<str:file_path>/', SubmissionsTableView.as_view(), name='serve_file'),
     path('delete_submission', DeleteSubmission.as_view(), name="delete_submission"),
     path('view_report/<uuid:report_number>/', ViewReportView.as_view(), name='view_report'),
+    path('user_report_action/<uuid:report_number>/', ReportActionView.as_view(), name='view_action'),
+    path('report/mark_resolved/<uuid:report_number>/', ViewReportView.mark_as_resolved, name='mark_as_resolved')
 ]

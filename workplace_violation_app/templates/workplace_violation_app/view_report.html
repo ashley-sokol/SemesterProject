@@ -36,12 +36,19 @@
             <p>No file attached</p>
         {% endif %}
         </div>
+        <form method="post" action="{% url 'workplace_violation_app:mark_as_resolved' report.report_number %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Mark as Resolved</button>
+        </form>
         <h3>Admin Notes:</h3>
         <form method="post">
             {% csrf_token %}
             {{ notes_form.as_p }}
             <button type="submit" class="btn btn-primary">Save Notes</button>
-
+            </form>
+        <form action="{% url 'workplace_violation_app:submissions_table'%}" method="get">
+                <button type="submit" >Back to Submissions Table</button>
+        
             </form>
     </div>
 </div>
