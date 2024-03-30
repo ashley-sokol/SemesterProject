@@ -116,10 +116,16 @@ class UserSubmissionsTableView(View):
         return render(request, self.template_name, context)
 class DeleteSubmission(View):
     template_name = 'workplace_violation_app/user_submissions.html'
+    # def post(self, request, *args, **kwargs):
+    #     report_number = request.POST.get('report_number')
+    #     if report_number:
+    #         report = get_object_or_404(Report, id=report_number)
+    #         report.delete()
+    #     return redirect('workplace_violation_app:user_submissions')
     def post(self, request, *args, **kwargs):
-        report_id = request.POST.get('report_id')
-        if report_id:
-            report = get_object_or_404(Report, id=report_id)
+        report_number = request.POST.get('report_number')
+        if report_number:
+            report = get_object_or_404(Report, report_number=report_number)
             report.delete()
             submissions = Report.objects.all().order_by('-report_date')
             context = {'submissions': submissions}
