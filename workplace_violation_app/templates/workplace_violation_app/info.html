@@ -7,24 +7,49 @@
 {% csrf_token %}
 <link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
 {% block content %}
-<div class="container px-4">
-  <div class="row gx-5">
-    <div class="col">
-      <h1 class="p-3">Info</h1>
+<div class="text-center">
+    <div class="title p-3">
+        <h1>Learn More</h1>
     </div>
-   <div class="col">
-      <h1 class="p-3">Help</h1>
+<div class="row row-cols-1 row-cols-md-2">
+  <div class="col mb-4">
+    <div class="card" style="width: 500px">
+      <img class="card-img-top" src="{% static '/admin/img/construction_stock_photo.jpg' %}" alt="img">
+      <div class="card-body">
+        <h4 class="card-title">Reporting</h4>
+         <p class="card-text">It is your right as an employee to fair treatment and safe working conditions - our application is here to provide you with a quick, actionable, and reliable method of submitting workplace violations. Not sure what exactly a workplace violation is, or just interested in learning how to report?</p>
+          <a href="#" class="btn btn-danger">Learn more</a>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card" style="width: 500px">
+      <img class="card-img-top" src="{% static '/admin/img/construction_stock_photo.jpg' %}" alt="img">
+      <div class="card-body">
+        <h4 class="card-title">Reporting in the healthcare industry</h4>
+         <p class="card-text">It is your right as an employee to fair treatment and safe working conditions - our application is here to provide you with a quick, actionable, and reliable method of submitting workplace violations. Not sure what exactly a workplace violation is, or just interested in learning how to report?</p>
+          <a href="#" class="btn btn-danger">Learn more</a>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card" style="width: 500px">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">Learn about reporting</h4>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+      </div>
+    </div>
+  </div>
+  <div class="col mb-4">
+    <div class="card" style="width: 500px">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <h4 class="card-title">Learn about reporting</h4>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
     </div>
   </div>
 </div>
-<div class="container col-md-4" style="text-align:left;">
-    <div class="card">
-        <img class="card-img-top" src="{% static '/admin/img/construction_stock_photo.jpg' %}" alt="img">
-        <div class="card-body">
-            <h4 class="card-title">Learn about reporting</h4>
-            <p class="card-text">It is your right as an employee to fair treatment and safe working conditions - our application is here to provide you with a quick, actionable, and reliable method of submitting workplace violations. Not sure what exactly a workplace violation is, or just interested in learning how to report?</p>
-            <a href="#" class="btn btn-danger">Learn more</a>
-        </div>
-    </div>
 </div>
 {% endblock %}
