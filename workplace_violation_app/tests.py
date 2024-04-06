@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 from unittest.mock import patch
 from workplace_violation_app.models import Report
 from workplace_violation_app.models import CustomUser
-from workplace_violation_app.views import IndexView
+from workplace_violation_app.views import IndexView, UserSubmissionsTableView
 from django.urls import reverse
 
 
@@ -64,14 +64,19 @@ class CaseSearch2(TestCase):
         self.assertNotIn('report', response.context)  # Check if the 'report' variable is not in the context
         self.assertIn("Form is not valid", mock_stdout.getvalue())
 
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_no_search(self, mock_stdout):
-        url = reverse('workplace_violation_app:index')
-        data = {'case_number': 'random-case-num47893'}
-        response = self.client.post(url, data)
-        self.assertNotIn('report', response.context)  # Check if the 'report' variable is not in the context
-        self.assertIn("Form is not valid", mock_stdout.getvalue())
-
+# class UserSubmissionsTableViewTest(TestCase):
+#     def setUp(self):
+#         self.factory = RequestFactory()
+#         self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
+#         self.client.login(username='testuser', password='testpassword')
+#         self.report = Report.objects.create(report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1d',report_text='Test Report', report_date='2024-04-06')
+#     def test_successful_no_file_path(self):
+#         request = self.client.get('/user_submissions/')
+#         response = UserSubmissionsTableView.as_view()(request)
+#         self.assertTemplateUsed(response, 'workplace_violation_app/user_submissions.html')  # Check if the correct template is used
+#         self.assertIn('submissions', response.context)
+#         submissions = response.context['submissions']
+#         self.assertEqual(len(submissions), 1)
 class ReportInfoTest(TestCase):
     #practice test to ensure github actions is working. can delete later in the project
     def test_true(self):

@@ -163,6 +163,7 @@ class UserSubmissionsTableView(View):
         file_path = kwargs.get('file_path')
 
         if file_path:
+            print("FILE PATH HERE")
             report_file = get_object_or_404(Report, report_file=file_path)
             s3_url = report_file.url
             return HttpResponseRedirect(s3_url)
