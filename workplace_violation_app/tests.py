@@ -1,3 +1,6 @@
+from io import StringIO
+from sys import stdout
+
 from django.test import TestCase, RequestFactory
 from django.http import Http404, response
 from django.core.exceptions import ValidationError
@@ -30,7 +33,6 @@ class CaseSearch2(TestCase):
         self.client.login(username='testuser', password='testpassword')
         self.report = Report.objects.create(report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1d', report_text='Test Report', report_date='2024-04-06')
     def test_valid_number(self):
-        print(Report.objects.all())
         url = reverse('workplace_violation_app:index')
         data = {'search': 'search value', 'case_number': '4671197c-8447-4fbc-96fd-0e68cf77ac1d'}
         response = self.client.post(url, data)
@@ -40,7 +42,35 @@ class CaseSearch2(TestCase):
         self.assertIn('report', response.context)  # Check if the 'report' variable is in the context
         self.assertEqual(response.context['url'], reverse('workplace_violation_app:user_report_view', args=[self.report.pk]))  # Check if the URL is set correctly
         self.assertNotContains(response, "Form is not valid")  # Check if no error messages are displayed
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_invalid_form(self, mock_stdout):
+        url = reverse('workplace_violation_app:index')
+        data = {'search': 'search value', 'case_number': ''}  # Missing case_number field to make the form invalid
+        response = self.client.post(url, data)
+        # Check if the error message is displayed in stdout
+        self.assertIn("Form is not valid", mock_stdout.getvalue())
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_nonexistent_case_number(self, mock_stdout):
+        url = reverse('workplace_violation_app:index')
+        data = {'search': 'search value', 'case_number': '4671197c-8447-4fbc-96rg-0e68cf77ac1d'}
+        response = self.client.post(url, data)
+        self.assertNotIn('report', response.context)  # Check if the 'report' variable is not in the context
+        self.assertIn("Form is not valid", mock_stdout.getvalue())
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_bad_format_case_number(self, mock_stdout):
+        url = reverse('workplace_violation_app:index')
+        data = {'search': 'search value', 'case_number': 'random-case-num47893'}
+        response = self.client.post(url, data)
+        self.assertNotIn('report', response.context)  # Check if the 'report' variable is not in the context
+        self.assertIn("Form is not valid", mock_stdout.getvalue())
 
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_no_search(self, mock_stdout):
+        url = reverse('workplace_violation_app:index')
+        data = {'case_number': 'random-case-num47893'}
+        response = self.client.post(url, data)
+        self.assertNotIn('report', response.context)  # Check if the 'report' variable is not in the context
+        self.assertIn("Form is not valid", mock_stdout.getvalue())
 
 class ReportInfoTest(TestCase):
     #practice test to ensure github actions is working. can delete later in the project
