@@ -64,24 +64,49 @@ class IndexView(generic.View):
         elif 'search' in request.POST:
             form = SearchForm(request.POST)
             if form.is_valid():
-                case_number = (form.cleaned_data['case_number'])
+                case_number = form.cleaned_data['case_number']
                 try:
                     report = get_object_or_404(Report, pk=case_number)
                     context = {'report': report}
-                    url = reverse('workplace_violation_app:user_report_view',args=[report.pk])
+                    context['url'] = reverse('workplace_violation_app:user_report_view',args=[report.pk])
+                    HttpResponse(status=200)
                     return render(request, "workplace_violation_app/user_report_view.html", context)
                 except Http404:
                     print("Form is not valid")
                     print("Errors:", form.errors)
-                    return render(request, self.template_name, {'ReportForm': ReportForm, 'SearchForm' : SearchForm, 'CaseNotFound' : True})
+                    return render(request, self.template_name,
+                                  {'ReportForm': ReportForm, 'SearchForm': SearchForm, 'CaseNotFound': True})
                 except ValidationError:
                     print("Form is not valid")
                     print("Errors:", form.errors)
-                    return render(request, self.template_name, {'ReportForm': ReportForm, 'SearchForm' : SearchForm, 'UUIDNotValid' : True})
-
+                    return render(request, self.template_name,
+                                  {'ReportForm': ReportForm, 'SearchForm': SearchForm, 'UUIDNotValid': True})
             else:
                 print("Form is not valid")
                 print("Errors:", form.errors)
+
+        # GAVINS CODE BEFORE ASHLEY MODIFIED FOR TESTING 04/06/24
+        # elif 'search' in request.POST:
+        #     form = SearchForm(request.POST)
+        #     if form.is_valid():
+        #         case_number = (form.cleaned_data['case_number'])
+        #         try:
+        #             report = get_object_or_404(Report, pk=case_number)
+        #             context = {'report': report}
+        #             url = reverse('workplace_violation_app:user_report_view',args=[report.pk])
+        #             return render(request, "workplace_violation_app/user_report_view.html", context)
+        #         except Http404:
+        #             print("Form is not valid")
+        #             print("Errors:", form.errors)
+        #             return render(request, self.template_name, {'ReportForm': ReportForm, 'SearchForm' : SearchForm, 'CaseNotFound' : True})
+        #         except ValidationError:
+        #             print("Form is not valid")
+        #             print("Errors:", form.errors)
+        #             return render(request, self.template_name, {'ReportForm': ReportForm, 'SearchForm' : SearchForm, 'UUIDNotValid' : True})
+        #
+        #     else:
+        #         print("Form is not valid")
+        #         print("Errors:", form.errors)
 
 class UserReportView(View):
     template_name = 'workplace_violation_app/user_report_view.html'
