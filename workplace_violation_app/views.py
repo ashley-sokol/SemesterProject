@@ -161,13 +161,14 @@ class UserSubmissionsTableView(View):
     template_name = 'workplace_violation_app/user_submissions.html'
     def get(self, request, *args, **kwargs):
         file_path = kwargs.get('file_path')
-
+        print(file_path)
         if file_path:
-            print("FILE PATH HERE")
+            print("FILE PATH FOUND")
             report_file = get_object_or_404(Report, report_file=file_path)
             s3_url = report_file.url
             return HttpResponseRedirect(s3_url)
-
+        else:
+            print("NO GIVEN FILE PATH")
         submissions = Report.objects.all().order_by('-report_date')
         context = {'submissions': submissions}
         return render(request, self.template_name, context)

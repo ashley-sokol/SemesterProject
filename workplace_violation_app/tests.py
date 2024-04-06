@@ -1,8 +1,9 @@
 from io import StringIO
 from sys import stdout
 
+from django.template.loader import render_to_string
 from django.test import TestCase, RequestFactory
-from django.http import Http404, response
+from django.http import Http404, response, HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from unittest.mock import patch
 from workplace_violation_app.models import Report
@@ -64,19 +65,18 @@ class CaseSearch2(TestCase):
         self.assertNotIn('report', response.context)  # Check if the 'report' variable is not in the context
         self.assertIn("Form is not valid", mock_stdout.getvalue())
 
-# class UserSubmissionsTableViewTest(TestCase):
-#     def setUp(self):
-#         self.factory = RequestFactory()
-#         self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
-#         self.client.login(username='testuser', password='testpassword')
-#         self.report = Report.objects.create(report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1d',report_text='Test Report', report_date='2024-04-06')
-#     def test_successful_no_file_path(self):
-#         request = self.client.get('/user_submissions/')
-#         response = UserSubmissionsTableView.as_view()(request)
-#         self.assertTemplateUsed(response, 'workplace_violation_app/user_submissions.html')  # Check if the correct template is used
-#         self.assertIn('submissions', response.context)
-#         submissions = response.context['submissions']
-#         self.assertEqual(len(submissions), 1)
+class UserSubmissionsTableViewTest(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+        report = Report.objects.create(report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1d',report_text='Test Report', report_date='2024-04-06')
+        self.view_url = reverse('workplace_violation_app:user_submissions')
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_successful_no_file_path(self, mock_stdout):
+        request = self.factory.get(self.view_url)
+        response = UserSubmissionsTableView.as_view()(request)
+        self.assertIn("NO GIVEN FILE PATH", mock_stdout.getvalue())
 class ReportInfoTest(TestCase):
     #practice test to ensure github actions is working. can delete later in the project
     def test_true(self):
