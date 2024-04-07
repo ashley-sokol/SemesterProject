@@ -10,9 +10,11 @@ from workplace_violation_app.models import Report,CustomUser,CustomS3Storage
 from workplace_violation_app.views import IndexView, UserSubmissionsTableView
 from django.urls import reverse
 
-# Create your tests here.
 # https://docs.djangoproject.com/en/5.0/topics/testing/ SOURCE
-#some CustomUser tests (not done)
+
+#1. TESTING MODELS
+
+#CustomUser model testing
 class TestCustomUserModel(TestCase):
     #test to ensure we can successfully make a custom user (CustomUser model)
     def test_creating_user(self):
@@ -24,6 +26,70 @@ class TestCustomUserModel(TestCase):
         user=CustomUser.objects.create(username="hello")
         user.is_admin=True
         self.assertTrue(user.is_admin)
+#Customs3Storage model testing
+
+
+#Report model testing
+class TestReportModel(TestCase):
+    def setUp(self):
+        self.user=CustomUser.objects.create_user(username='testuser')
+    def test_create_report(self):
+       # storage=CustomS3Storage.objects.create()
+        report=Report.objects.create(
+            report_user=self.user,
+            report_date='2024-04-06',
+            report_text='Test Report',
+            #report_file=storage,
+            report_status='New',
+            is_seen=False,
+            admin_notes='Test Notes'
+        )
+        self.assertEqual(str(report),f"Report from {report.report_date}")
+        self.assertTrue(isinstance(report, Report))#check if report actually makes a Report model
+        #self.assertEqual(Report.objects.length, 1)
+
+#LoginView view testing
+#set up for login testing
+class TestLoginView(TestCase):
+    def setUp(self):
+        self.client=Client()
+        self.url=reverse('workplace_violation_app:login')
+
+#Logout_view view testing
+
+#IndexView view testing
+
+#UserReportView view testing
+
+#ViewReportView view testing
+
+#SubmissionsTableView view testing
+
+#ReportActionView view testing
+
+#UserSubmissionsTableView view testing
+class TestUserSubmissionsTableView(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+        report = Report.objects.create(report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1d',report_text='Test Report', report_date='2024-04-06')
+        self.view_url = reverse('workplace_violation_app:user_submissions')
+    @patch('sys.stdout', new_callable=StringIO)
+    def test_successful_no_file_path(self, mock_stdout):
+        request = self.factory.get(self.view_url)
+        response = UserSubmissionsTableView.as_view()(request)
+        self.assertIn("NO GIVEN FILE PATH", mock_stdout.getvalue())
+
+#DeleteSubmission view testing
+class TestDeleteSubmissionView(TestCase):
+    def setUp(self):
+        self.client=Client()
+        self.url=reverse('workplace_violation_app:delete_submission')
+    def test_delete_submission(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code,405)
+
 
 #case search tests
 class CaseSearch2(TestCase):
@@ -63,52 +129,9 @@ class CaseSearch2(TestCase):
         self.assertNotIn('report', response.context)  # Check if the 'report' variable is not in the context
         self.assertIn("Form is not valid", mock_stdout.getvalue())
 
-#user submission table tests
-class TestUserSubmissionsTableView(TestCase):
-    def setUp(self):
-        self.factory = RequestFactory()
-        self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
-        self.client.login(username='testuser', password='testpassword')
-        report = Report.objects.create(report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1d',report_text='Test Report', report_date='2024-04-06')
-        self.view_url = reverse('workplace_violation_app:user_submissions')
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_successful_no_file_path(self, mock_stdout):
-        request = self.factory.get(self.view_url)
-        response = UserSubmissionsTableView.as_view()(request)
-        self.assertIn("NO GIVEN FILE PATH", mock_stdout.getvalue())
 
-#Report model tests
-class TestReportModel(TestCase):
-    def setUp(self):
-        self.user=CustomUser.objects.create_user(username='testuser')
-    def test_create_report(self):
-       # storage=CustomS3Storage.objects.create()
-        report=Report.objects.create(
-            report_user=self.user,
-            report_date='2024-04-06',
-            report_text='Test Report',
-            #report_file=storage,
-            report_status='New',
-            is_seen=False,
-            admin_notes='Test Notes'
-        )
-        self.assertEqual(str(report),f"Report from {report.report_date}")
-        self.assertTrue(isinstance(report, Report))#check if report actually makes a Report model
-        #self.assertEqual(Report.objects.length, 1)
 
-class TestDeleteSubmissionView(TestCase):
-    def setUp(self):
-        self.client=Client()
-        self.url=reverse('workplace_violation_app:delete_submission')
-    def test_delete_submission(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code,405)
 
-#set up for login testing
-class TestLoginView(TestCase):
-    def setUp(self):
-        self.client=Client()
-        self.url=reverse('workplace_violation_app:login')
 
 
 
