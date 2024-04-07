@@ -6,8 +6,10 @@ from django.test import TestCase, RequestFactory,Client
 from django.http import Http404, response, HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from unittest.mock import patch
+
+from requests import Request
 from workplace_violation_app.models import Report,CustomUser,CustomS3Storage
-from workplace_violation_app.views import IndexView, UserSubmissionsTableView
+from workplace_violation_app.views import IndexView, UserSubmissionsTableView, SubmissionsTableView
 from django.urls import reverse
 
 # https://docs.djangoproject.com/en/5.0/topics/testing/ SOURCE
@@ -71,12 +73,23 @@ class LogoutViewTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
 #IndexView view testing
-
+class IndexViewTest(TestCase):
+    def setUp(self):
+        self.view_url = reverse('workplace_violation_app:index')
+    def test_redirect(self):
+        response = self.client.get(self.view_url)
+        self.assertEqual(response.status_code, 200)
 #UserReportView view testing
 
 #ViewReportView view testing
 
 #SubmissionsTableView view testing
+class SubmissionsTableViewTest(TestCase):
+    def setUp(self):
+        self.view_url = reverse('workplace_violation_app:submissions_table')
+    def test_redirect(self):
+        response = self.client.get(self.view_url)
+        self.assertEqual(response.status_code, 200)
 
 #ReportActionView view testing
 
