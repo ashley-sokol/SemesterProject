@@ -13,6 +13,20 @@ from django.urls import reverse
 # https://docs.djangoproject.com/en/5.0/topics/testing/ SOURCE
 
 #1. TESTING MODELS
+class LogoutViewTest(TestCase):
+    #TODO: add assertions for user state
+    def test_log_out_no_user(self):
+        url = reverse('workplace_violation_app:logout')
+        response = self.client.get(url)
+        #ensure that valid html is returned
+        self.assertEqual(response.status_code, 302)
+    def test_log_out_custom_user(self):
+        url = reverse('workplace_violation_app:logout')
+        self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+
 
 #CustomUser model testing
 class TestCustomUserModel(TestCase):
