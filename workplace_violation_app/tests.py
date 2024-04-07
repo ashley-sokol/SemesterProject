@@ -2,21 +2,18 @@ from io import StringIO
 from sys import stdout
 
 from django.template.loader import render_to_string
-from django.test import TestCase, RequestFactory
+from django.test import TestCase, RequestFactory,Client
 from django.http import Http404, response, HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from unittest.mock import patch
-from workplace_violation_app.models import Report
-from workplace_violation_app.models import CustomUser
+from workplace_violation_app.models import Report,CustomUser,CustomS3Storage
 from workplace_violation_app.views import IndexView, UserSubmissionsTableView
 from django.urls import reverse
 
-
 # Create your tests here.
 # https://docs.djangoproject.com/en/5.0/topics/testing/ SOURCE
-
-
-class CustomUserTest(TestCase):
+#some CustomUser tests (not done)
+class TestCustomUserModel(TestCase):
     #test to ensure we can successfully make a custom user (CustomUser model)
     def test_creating_user(self):
         CustomUser.objects.create(username="hello")
@@ -28,6 +25,7 @@ class CustomUserTest(TestCase):
         user.is_admin=True
         self.assertTrue(user.is_admin)
 
+#case search tests
 class CaseSearch2(TestCase):
     def setUp(self):
         self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
@@ -65,7 +63,8 @@ class CaseSearch2(TestCase):
         self.assertNotIn('report', response.context)  # Check if the 'report' variable is not in the context
         self.assertIn("Form is not valid", mock_stdout.getvalue())
 
-class UserSubmissionsTableViewTest(TestCase):
+#user submission table tests
+class TestUserSubmissionsTableView(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
@@ -77,23 +76,44 @@ class UserSubmissionsTableViewTest(TestCase):
         request = self.factory.get(self.view_url)
         response = UserSubmissionsTableView.as_view()(request)
         self.assertIn("NO GIVEN FILE PATH", mock_stdout.getvalue())
-class ReportInfoTest(TestCase):
-    #practice test to ensure github actions is working. can delete later in the project
-    def test_true(self):
-        self.assertTrue(True)
-    #def test_create_report(self):
-        #Report.objects.create()
-        #self.assertEquals(Report.objects.length, 1)
 
-    #test below not working bc of some storage problem. trying to sort it out but not needed for now
-    #def test_create_anon_report(self):
-       # date = timezone.now().date()
-       # text = "hi"
-        #file= SimpleUploadedFile(
-           # "best_file_eva.txt",
-            #b"these are the file contents!"  # note the b in front of the string [bytes]
-        #)
-      #  AnonReportInfo.objects.create(report_date=date, report_text=text, report_file=file)
-       # self.assertEquals(AnonReportInfo.objects.length, 1)
+#Report model tests
+class TestReportModel(TestCase):
+    def setUp(self):
+        self.user=CustomUser.objects.create_user(username='testuser')
+    def test_create_report(self):
+       # storage=CustomS3Storage.objects.create()
+        report=Report.objects.create(
+            report_user=self.user,
+            report_date='2024-04-06',
+            report_text='Test Report',
+            #report_file=storage,
+            report_status='New',
+            is_seen=False,
+            admin_notes='Test Notes'
+        )
+        self.assertEqual(str(report),f"Report from {report.report_date}")
+        self.assertTrue(isinstance(report, Report))#check if report actually makes a Report model
+        #self.assertEqual(Report.objects.length, 1)
+
+class TestDeleteSubmissionView(TestCase):
+    def setUp(self):
+        self.client=Client()
+        self.url=reverse('workplace_violation_app:delete_submission')
+    def test_delete_submission(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code,405)
+
+#set up for login testing
+class TestLoginView(TestCase):
+    def setUp(self):
+        self.client=Client()
+        self.url=reverse('workplace_violation_app:login')
+
+
+
+
+
+
 
 
