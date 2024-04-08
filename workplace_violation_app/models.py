@@ -15,7 +15,7 @@ class CustomUser(AbstractUser):
 class CustomS3Storage(S3Boto3Storage):
     location = 'media'
     file_overwrite = False
-class Report(models.Model): #previously anonreportinfo
+class Report(models.Model): #previously anonrepor
     report_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     report_date = models.DateField()
     report_text = models.TextField(null=True, blank= False)
