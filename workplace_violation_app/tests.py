@@ -65,7 +65,10 @@ class TestReportModel(TestCase):
 class TestLoginView(TestCase):
     def setUp(self):
         self.client=Client()
-        self.url=reverse('workplace_violation_app:login')
+        self.view_url=reverse('workplace_violation_app:login')
+    # def test_redirect(self):
+    #     response = self.client.get(self.view_url)
+    #     self.assertEqual(response.status_code, 200)
 
 #Logout_view view testing
 class LogoutViewTest(TestCase):
@@ -79,8 +82,14 @@ class LogoutViewTest(TestCase):
         url = reverse('workplace_violation_app:logout')
         self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
         self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(reverse('workplace_violation_app:index'))
+        self.assertTrue(response.context['user'].is_authenticated)
+        self.assertEqual(response.status_code, 200)
         response = self.client.get(url)
         self.assertEqual(response.status_code, 302)
+        response = self.client.get(reverse('workplace_violation_app:index'))
+        self.assertFalse(response.context['user'].is_authenticated)
+        self.assertEqual(response.status_code, 200)
 
 #IndexView view testing
 class IndexViewTest(TestCase):
