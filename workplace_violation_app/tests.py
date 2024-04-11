@@ -28,27 +28,23 @@ class TestCustomUserModel(TestCase):
         user=CustomUser.objects.create(username="hello")
         user.is_admin=True
         self.assertTrue(user.is_admin)
-#Customs3Storage model testing
-
 
 #Report model testing
 class TestReportModel(TestCase):
     def setUp(self):
         self.user=CustomUser.objects.create_user(username='testuser')
     def test_create_report(self):
-       # storage=CustomS3Storage.objects.create()
         report=Report.objects.create(
             report_user=self.user,
             report_date='2024-04-06',
             report_text='Test Report',
-            #report_file=storage,
             report_status='New',
             is_seen=False,
             admin_notes='Test Notes'
         )
         self.assertEqual(str(report),f"Report from {report.report_date}")
         self.assertTrue(isinstance(report, Report))#check if report actually makes a Report model
-        #self.assertEqual(Report.objects.length, 1)
+        self.assertEqual(Report.objects.count(), 1)
 
 #LoginView view testing
 #set up for login testing
