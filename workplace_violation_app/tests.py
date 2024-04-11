@@ -33,18 +33,32 @@ class TestCustomUserModel(TestCase):
 class TestReportModel(TestCase):
     def setUp(self):
         self.user=CustomUser.objects.create_user(username='testuser')
-    def test_create_report(self):
-        report=Report.objects.create(
+        self.report=Report.objects.create(
             report_user=self.user,
             report_date='2024-04-06',
             report_text='Test Report',
             report_status='New',
-            is_seen=False,
             admin_notes='Test Notes'
         )
-        self.assertEqual(str(report),f"Report from {report.report_date}")
-        self.assertTrue(isinstance(report, Report))#check if report actually makes a Report model
+    def test_create_report(self):
+        self.assertEqual(str(self.report),f"Report from {self.report.report_date}")
+        self.assertTrue(isinstance(self.report, Report))#check if report actually makes a Report model
         self.assertEqual(Report.objects.count(), 1)
+        self.assertFalse(self.report.is_seen)#is_seen should be default Faulse
+    def test_update_report_status(self):
+        self.report.report_status='In Progress'
+        self.assertEqual(self.report.report_status,'In Progress')
+    def test_update_report_seen(self):
+        self.report.is_seen = True
+        self.assertTrue(self.report.is_seen)
+    def test_changing_report_text(self):
+        self.report.report_text='test report text'
+        self.assertEqual(self.report.report_text,'test report text')
+
+    def test_report_date(self):
+        self.assertEqual(self.report.report_date, '2024-04-06')
+
+
 
 #LoginView view testing
 #set up for login testing
