@@ -9,8 +9,9 @@ from unittest.mock import patch
 
 from requests import Request
 from workplace_violation_app.models import Report,CustomUser,CustomS3Storage
-from workplace_violation_app.views import IndexView, UserSubmissionsTableView, SubmissionsTableView
+from workplace_violation_app.views import IndexView, UserSubmissionsTableView, SubmissionsTableView, ViewReportView
 from django.urls import reverse
+
 
 # https://docs.djangoproject.com/en/5.0/topics/testing/ SOURCE
 
@@ -103,6 +104,24 @@ class IndexViewTest(TestCase):
 #UserReportView view testing
 
 #ViewReportView view testing
+class TestViewReportView(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+        self.report = Report.objects.create(
+            report_user=self.user,
+            report_date='2024-04-06',
+            report_text='Test Report',
+            report_status='New',
+            admin_notes='Test Notes',
+            report_number = '4671197c-8447-4fbc-96fd-0e68cf77ac1d'
+        )
+        self.view_url = reverse('workplace_violation_app:view_report',  kwargs={'report_number': self.report.report_number})
+    def test_get_view_report(self):
+        response = self.client.get(self.view_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'workplace_violation_app/view_report.html')
 
 #SubmissionsTableView view testing
 class SubmissionsTableViewTest(TestCase):
