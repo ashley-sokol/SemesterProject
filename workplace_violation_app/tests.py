@@ -121,6 +121,17 @@ class ReportActionViewTest(TestCase):
         view_url = reverse('workplace_violation_app:view_action', kwargs={'report_number': self.report.report_number})
         response = self.client.get(view_url)
         self.assertEqual(response.status_code, 200)
+    def test_standard_admin_notes(self):
+        view_url = reverse('workplace_violation_app:view_action', kwargs={'report_number': self.report.report_number})
+        response = self.client.get(view_url)
+        self.assertIsNone(response.context['report'].admin_notes)
+        self.assertEqual(response.status_code, 200)
+        Report.objects.create(report_user = self.user, report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1f', report_text='Test Report', report_date='2024-04-06', admin_notes = "test notes")
+        self.report = Report.objects.get(report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1f')
+        view_url = reverse('workplace_violation_app:view_action', kwargs={'report_number': self.report.report_number})
+        response = self.client.get(view_url)
+        self.assertEqual(response.context['report'].admin_notes, "test notes")
+        self.assertEqual(response.status_code, 200)
 
 #UserSubmissionsTableView view testing
 class TestUserSubmissionsTableView(TestCase):
