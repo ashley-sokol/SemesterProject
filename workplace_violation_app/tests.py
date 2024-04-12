@@ -111,6 +111,16 @@ class SubmissionsTableViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 #ReportActionView view testing
+class ReportActionViewTest(TestCase):
+    def setUp(self):
+        self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+        Report.objects.create(report_user = self.user, report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1d', report_text='Test Report', report_date='2024-04-06')
+        self.report = Report.objects.get(report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1d')
+    def test_redirect(self):
+        view_url = reverse('workplace_violation_app:view_action', kwargs={'report_number': self.report.report_number})
+        response = self.client.get(view_url)
+        self.assertEqual(response.status_code, 200)
 
 #UserSubmissionsTableView view testing
 class TestUserSubmissionsTableView(TestCase):
