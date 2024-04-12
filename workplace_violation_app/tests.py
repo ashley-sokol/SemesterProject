@@ -18,16 +18,18 @@ from django.urls import reverse
 
 #CustomUser model testing
 class TestCustomUserModel(TestCase):
+    def setUp(self):
+        self.user = CustomUser.objects.create(username="testuser")
     #test to ensure we can successfully make a custom user (CustomUser model)
     def test_creating_user(self):
-        CustomUser.objects.create(username="hello")
         self.assertEqual(len(CustomUser.objects.all()), 1)
+        self.assertEqual(str(self.user), "testuser")
+        self.assertFalse(self.user.is_admin)#default should be false
 
     #test to check is_admin field for CustomUser model
     def test_check_admin_user(self):
-        user=CustomUser.objects.create(username="hello")
-        user.is_admin=True
-        self.assertTrue(user.is_admin)
+        self.user.is_admin=True
+        self.assertTrue(self.user.is_admin)
 
 #Report model testing
 class TestReportModel(TestCase):
