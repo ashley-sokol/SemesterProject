@@ -102,6 +102,31 @@ class IndexViewTest(TestCase):
         response = self.client.get(self.view_url)
         self.assertEqual(response.status_code, 200)
 #UserReportView view testing
+class UserReportViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = CustomUser.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+        self.report = Report.objects.create(
+            report_user=self.user,
+            report_date='2024-04-14',
+            report_text='Report by the user',
+            report_status='New',
+            admin_notes='Initial notes',
+            report_number='4671197c-8447-4fbc-96fd-0e68cf77ac1d'
+        )
+        self.view_url = reverse('workplace_violation_app:user_report_view', kwargs={'report_number': self.report.report_number})
+
+    def test_user_report_view_template(self):
+        response = self.client.get(self.view_url)
+        self.assertTemplateUsed(response, 'workplace_violation_app/user_report_view.html')
+
+    def test_user_report_view_context(self):
+        response = self.client.get(self.view_url)
+        self.assertIn('report', response.context)
+        self.assertEqual(response.context['report'].report_text, self.report.report_text)
+        # Convert both dates to strings to compare(datetime.date obj and string)
+        self.assertEqual(str(response.context['report'].report_date), str(self.report.report_date))
 
 #ViewReportView view testing
 class TestViewReportView(TestCase):

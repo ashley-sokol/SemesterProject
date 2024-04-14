@@ -113,8 +113,9 @@ class IndexView(generic.View):
 class UserReportView(View):
     template_name = 'workplace_violation_app/user_report_view.html'
 
-    def get(self, request, report, *args, **kwargs):
-        return render(request, self.template_name, {'report':report})
+    def get(self, request, report_number, *args, **kwargs):
+        report = get_object_or_404(Report, report_number=report_number)
+        return render(request, self.template_name, {'report': report})
 
 class ViewReportView(View):
     template_name = 'workplace_violation_app/view_report.html'
