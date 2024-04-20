@@ -15,15 +15,14 @@ class CustomUser(AbstractUser):
 class CustomS3Storage(S3Boto3Storage):
     location = 'media'
     file_overwrite = False
-class Report(models.Model): #previously anonrepor
+class Report(models.Model):
     report_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     report_date = models.DateField()
     report_text = models.TextField(null=True, blank= False)
     report_file = models.FileField(storage=CustomS3Storage())    #Should save in Amazon s3 bucket
     report_status = models.CharField(max_length=100, default='New')  # status of report
-    report_number=models.UUIDField(primary_key=True,editable=False, default=uuid.uuid4, unique=True)
+    report_number = models.UUIDField(primary_key=True,editable=False, default=uuid.uuid4, unique=True)
     is_seen = models.BooleanField(default=False)
-
     admin_notes = models.TextField(null= True,blank = True)
 
     def __str__(self):

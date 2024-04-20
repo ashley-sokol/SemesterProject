@@ -51,9 +51,10 @@
                     {% endif %}
                 </td>
                 <td>
+                    {% csrf_token %}
                     <form method="post" action="{% url 'workplace_violation_app:delete_submission' %}">
                         {% csrf_token %}
-                        <input type="hidden" name="report_id" value="{{ report.id }}">
+                        <input type="hidden" name="report_number" value="{{ report.report_number }}">
                         <button type="submit" class="btn btn-outline-danger text-dark text-center">Delete Submission</button>
                         <a href="{% url 'workplace_violation_app:view_action' report.report_number %}" class="btn btn-info">View Action</a>
                     </form>

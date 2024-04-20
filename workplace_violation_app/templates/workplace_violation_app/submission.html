@@ -8,6 +8,10 @@
 {% block content %}
   <div class="container-fluid body">
     <h1>The data is saved. Thank you for your submission</h1>
+    <h4>Report case number: {{ report.report_number }}</h4>
+    {% if not user.is_authenticated %}
+    <h5>Since you reported anonymously, this case number is your only way to access updates - please save it somewhere safe.</h5>
+    {% endif %}
     <form action="{% url 'workplace_violation_app:index'%}" method="get">
         <button type="submit" >Back to Reporting Page</button>
 
