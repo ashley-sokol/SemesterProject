@@ -59,7 +59,8 @@ class IndexView(generic.View):
             else:
                 print("Form is not valid")
                 print("Errors:", form.errors)
-                return render(request, self.template_name, {'ReportForm': form, 'SearchForm': SearchForm})
+
+                return render(request, self.template_name, {'form':form})
         elif 'search' in request.POST:
             form = SearchForm(request.POST)
             if form.is_valid():
