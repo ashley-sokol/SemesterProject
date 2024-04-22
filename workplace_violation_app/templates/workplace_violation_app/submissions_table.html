@@ -8,7 +8,6 @@
 {% block content %}
 <div class="text-center">
     <h1>Current Reports</h1>
-    {% if user.is_admin %}
     <table class="table">
         <thead>
             <tr>
@@ -31,9 +30,5 @@
         {% endfor %}
         </tbody>
     </table>
-    {% else %}
-        Only admins have access to this information. Please login to an admin account.
-    {% endif %}
-
 </div>
 {% endblock %}
