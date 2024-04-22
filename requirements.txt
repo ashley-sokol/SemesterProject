@@ -7,3 +7,4 @@ django-bootstrap-v5
 django-allauth==0.61.1
 django-storages
 boto3
+requests
