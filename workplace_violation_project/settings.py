@@ -47,6 +47,7 @@ AWS_S3_SIGNATURE_VERSION = 's3v4'
 ALLOWED_HOSTS = [
     'a28-workplace-violations-3cea70b449e2.herokuapp.com',
     '127.0.0.1', 'localhost',
+    'voiceup-1bc9ffd949fb.herokuapp.com'
 ]
 
 
@@ -84,28 +85,21 @@ SITE_ID = 2
 
 LOGIN_REDIRECT_URL = '/workplace_violation_app/'
 LOGOUT_REDIRECT_URL = '/workplace_violation_app/'
+
+
+
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
-        'SCOPE': {
-            'profile', 'email'
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
         }
-    },
-}
 
-#
-# SOCIALACCOUNT_PROVIDERS = {
-#     'hello'
-#     'google': {
-#         'SCOPE': [
-#             'profile',
-#             'email',
-#         ],
-#         'AUTH_PARAMS': {
-#             'access_type': 'online',
-#         }
-#
-#     }
-# }
+    }
+}
 
 
 ROOT_URLCONF = 'workplace_violation_project.urls'
