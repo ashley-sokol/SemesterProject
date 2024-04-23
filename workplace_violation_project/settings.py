@@ -124,10 +124,10 @@ WSGI_APPLICATION = 'workplace_violation_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd1jkuapa3p4uha',
-        'USER': 'nwpmdxfyzueciz',
-        'PASSWORD': 'ec6372b3094702789358665ad32ea7e33847fe729cf64043fbe9d1398c7b50aa',
-        'HOST': 'ec2-34-193-110-25.compute-1.amazonaws.com',
+        'NAME': 'd8ssoler1bd1ed',
+        'USER': 'lxkojxpmidzolh',
+        'PASSWORD': '4a7e839329ab3029edf54499c32ab533fa036b54d1b8565a2e3d073ecde9727e',
+        'HOST': 'ec2-44-218-64-126.compute-1.amazonaws.com',
         'PORT': '5432',
 
     }
@@ -136,7 +136,7 @@ DATABASES = {
 
 if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
-if not os.environ.get('IS_HEROKU'): #if on local environment it will make local database and not use production database
+if not 'HEROKU' in os.environ: #if on local environment it will make local database and not use production database
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
