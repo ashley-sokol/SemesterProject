@@ -7,18 +7,18 @@
 <link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
 {% block content %}
 <div class="container-fluid body">
-  <div class="text-center">
-    <div class="title p-3">
+  <div class="text-center pt-2">
+    <div class="title">
       <h1>VoiceUP</h1>
       <h5>The workplace violation reporter</h5>
     </div>
     <div class="row">
-      <div class="container col-md-4 border rounded bg-body" style="text-align:left;">
+      <div class="container col-md-4 border rounded bg-body pt-2" style="text-align:left;">
         <h3> Report a Violation</h3>
         <form action ="" method = "post" enctype="multipart/form-data">
 
           {% csrf_token %}
-          {{ReportForm}}
+          {{ReportForm.as_p}}
     
           <button type = "submit">Submit</button>
     
@@ -52,7 +52,7 @@
           <div class="card-body">
             <h4 class="card-title">Learn about reporting</h4>
             <p class="card-text">It is your right as an employee to fair treatment and safe working conditions - our application is here to provide you with a quick, actionable, and reliable method of submitting workplace violations. Not sure what exactly a workplace violation is, or just interested in learning how to report?</p>
-            <a href="#" class="btn btn-primary">Learn more</a>
+            <a href="{% url 'workplace_violation_app:info' %}" class="btn btn-primary">Learn more</a>
           </div>
         </div>
         <div class="">
