@@ -8,43 +8,27 @@
 {% block content %}
 <div class="container-fluid body">
   <div class="text-center">
-    <div class="title p-3 rounded bg-white">
-      <h2  class="text-black "> Report A Workplace Violation Below</h2>
+    <div class="title p-3 bg-white">
+      <h2 class="text-black"> Search for a Submitted Report Below</h2>
 <!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
     </div>
-    <div class="row bg-dark border-dark pd-3 " >
-      <div class="container col-md-6 rounded bg-body border-dark" style="text-align:left">
+    <div class="row bg-white p-3 " >
+      <div class="container col-md-10 text-center rounded bg-body border border-dark" style="text-align:left">
 <!--        <h3> Report a Violation Anonymously</h3>-->
-        <form action ="" method = "post" enctype="multipart/form-data">
 
-          {% csrf_token %}
-          {{ReportForm}}
-    
-          <button type = "submit">Submit</button>
-    
-        </form>
-      </div>
-
-<!--      <div class="col-md-2 p-3">-->
-<!--        {% if user.is_admin %}-->
-<!--          <a href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-primary text-center m-3">View reports as admin</a>-->
-<!--        {% endif %}-->
-<!--        {% if user.is_authenticated %}-->
-<!--          <a href="{% url 'workplace_violation_app:user_submissions' %}" class="btn btn-outline-primary text-center m-3 mb-5">View my submissions</a>-->
-<!--        {% endif %}-->
-<!--        <div>-->
-<!--          <form action ="" method = "post">-->
-<!--            {% csrf_token %}-->
-<!--            {{SearchForm}}-->
-<!--            <button class="btn-primary mt-2">Find case</button>-->
-<!--          </form>-->
-<!--          {% if CaseNotFound %}-->
-<!--            <p>Case not found</p>-->
-<!--          {% endif %}-->
-<!--          {% if UUIDNotValid %}-->
-<!--            <p>Invalid UUID entered</p>-->
-<!--          {% endif %}-->
-<!--        </div>-->
+        <div>
+          <form action ="" method = "post">
+            {% csrf_token %}
+            {{SearchForm}}
+            <button class="btn-primary mt-2">Find case</button>
+          </form>
+          {% if CaseNotFound %}
+            <p>Case not found</p>
+          {% endif %}
+          {% if UUIDNotValid %}
+            <p>Invalid UUID entered</p>
+          {% endif %}
+        </div>
 
       </div>
 <!--      <div class="container col-md-4" style="text-align:left;">-->
@@ -62,14 +46,15 @@
 <!--      </div>-->
     </div>
 
-    {% if form.errors %}
+    <!--{% if form.errors %}
       <div class="error">
         <p>There were some errors in your submission:</p>
         {{ form.errors }}
       </div>
     {% endif %}
 
-    
+    !-->
+
   </div>
 
 {% endblock %}

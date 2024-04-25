@@ -9,8 +9,8 @@
 {% block content %}
   <div class="container-fluid body">
 <div class="text-center">
-    <h1>Welcome To The Login Page</h1>
-    <h2>Please login below</h2>
+    <h1>Log Into VoiceUP!</h1>
+    <h3>Please click to log in below with Google and save your submissions</h3>
         {% if user.is_authenticated %}
             {% if user.is_admin %}
                 <p class="text-primary ">{{user.username}}, you are logged in as an admin.</p>
@@ -19,7 +19,7 @@
             {% endif %}
             <a href="{% url 'workplace_violation_app:index' %}">Go to Home page</a>
         {% else %}
-            <a href="{% provider_login_url 'google' %}">Login With Google</a>
+            <a class="btn button-primary border border-dark" href="{% provider_login_url 'google' %}">Login With Google</a>
         {% endif %}
 </div>
       {% endblock %}</div>
