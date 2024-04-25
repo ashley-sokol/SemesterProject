@@ -3,7 +3,7 @@ from .models import Report
 
 class ReportForm(forms.Form):
      report_date = forms.DateField(help_text = "<small><em>Format: MM/DD/YYYY</small></em>", widget=forms.DateInput(attrs={'placeholder': 'Enter date here.', 'class': 'form-control'}))
-     report_text = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter detailed report here.', 'style': 'height: 200px;', 'class': 'form-control'}))
+     report_text = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter detailed report here.', 'style': 'height: 250px;', 'class': 'form-control'}))
      report_file = forms.FileField(help_text = "<small><em>Supported file extensions: .txt, .pdf, .jpg</em></small>", required=False, widget=forms.FileInput(attrs={'class': 'form-control-file'}))
      report = forms.BooleanField(widget=forms.HiddenInput, initial=True)
 
