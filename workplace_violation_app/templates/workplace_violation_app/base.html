@@ -60,12 +60,12 @@
       </ul>
       {% if user.is_authenticated and user.is_admin %}
       <ul class="navbar-nav navbar-right">
-        <li class="text-white">Welcome, {{ user.username }}. You are logged in as an admin.</li>
+        <li class="text-white">Welcome, {{ user.username|capfirst }}. You are logged in as an admin.</li>
       </ul>
       {% endif %}
       {% if user.is_authenticated and not user.is_admin %}
       <ul class="navbar-nav navbar-right">
-        <li class="text-white">Welcome, {{ user.username }}.</li>
+        <li class="text-white">Welcome, {{ user.username|capfirst }}.</li>
       </ul>
       {% endif %}
     </div>
