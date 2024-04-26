@@ -16,7 +16,7 @@
       <div class="container col-md-10 text-center bg-body border border-dark" style="text-align:left height:1000px;">
 <!--        <h3> Report a Violation Anonymously</h3>-->
 
-        <div>
+        <div class="p-3">
           <form action ="" method = "post">
             {% csrf_token %}
             {{SearchForm}}
@@ -26,7 +26,7 @@
             <p>Case not found</p>
           {% endif %}
           {% if UUIDNotValid %}
-            <p>Invalid UUID entered</p>
+            <p>Invalid case number entered</p>
           {% endif %}
         </div>
 
