@@ -7,10 +7,13 @@
 {% csrf_token %}
 <link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
 {% block content %}
-<div class="text-center">
-    <h1>Your Submitted Reports</h1>
+<div class="title p-3 rounded bg-white">
+      <h2  class="text-black text-center ">Submitted Reports</h2>
+<!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
+    </div>
+<div class="text-center border border-dark bg-white">
     <table class="table">
-        <thead>
+        <thead style=" background-color:rgba(199,210,255,.5)">
             <tr>
                 <th>Report Date</th>
                 <th> Report Text</th>
@@ -52,12 +55,17 @@
                 </td>
                 <td>
                     {% csrf_token %}
-                    <form method="post" action="{% url 'workplace_violation_app:delete_submission' %}">
-                        {% csrf_token %}
-                        <input type="hidden" name="report_number" value="{{ report.report_number }}">
-                        <button type="submit" class="btn btn-outline-danger text-dark text-center">Delete Submission</button>
-                        <a href="{% url 'workplace_violation_app:view_action' report.report_number %}" class="btn btn-info">View Action</a>
-                    </form>
+                    <input type="hidden" name="report_number" value="{{ report.report_number }}">
+                    <a href="{% url 'workplace_violation_app:view_action' report.report_number %}" class="btn btn-outline-primary">View Status</a>
+                    <a href="{% url 'workplace_violation_app:confirm_delete' report.report_number %}" class="btn btn-outline-danger text-dark text-center">Delete Submission</a>
+
+
+<!--                    <form method="post" action="{% url 'workplace_violation_app:delete_submission' %}">-->
+<!--                        {% csrf_token %}-->
+<!--                        <input type="hidden" name="report_number" value="{{ report.report_number }}">-->
+<!--                        <button type="submit" class="btn btn-outline-danger text-dark text-center">Delete Submission</button>-->
+<!--                        <a href="{% url 'workplace_violation_app:view_action' report.report_number %}" class="btn btn-outline-primary">View Action</a>-->
+<!--                    </form>-->
                 </td>
             </tr>
         {% endif %}

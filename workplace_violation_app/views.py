@@ -156,10 +156,32 @@ class ReportActionView(View):
     def get(self, request, report_number, *args, **kwargs):
         report = get_object_or_404(Report, pk=report_number,report_user=request.user)
         return render(request,self.template_name, {'report':report})
-    
+
 
 class UserSubmissionsTableView(View):
     template_name = 'workplace_violation_app/user_submissions.html'
+    def get(self, request, *args, **kwargs):
+        file_path = kwargs.get('file_path')
+        print(file_path)
+        if file_path:
+            print("FILE PATH FOUND")
+            report_file = get_object_or_404(Report, report_file=file_path)
+            s3_url = report_file.url
+            return HttpResponseRedirect(s3_url)
+        else:
+            print("NO GIVEN FILE PATH")
+        submissions = Report.objects.all().order_by('-report_date')
+        context = {'submissions': submissions}
+        return render(request, self.template_name, context)
+class ConfirmDelete(View):
+    template_name = 'workplace_violation_app/delete_submission.html'
+    def get(self, request, report_number, *args, **kwargs):
+        report = get_object_or_404(Report, report_number=report_number)
+        return render(request, self.template_name, {'report': report})
+
+class CancelDelete(View):
+    template_name = 'workplace_violation_app/user_submissions.html'
+
     def get(self, request, *args, **kwargs):
         file_path = kwargs.get('file_path')
         print(file_path)
@@ -250,9 +272,9 @@ class CaseSearchView(View):
                 try:
                     report = get_object_or_404(Report, pk=case_number)
                     context = {'report': report}
-                    context['url'] = reverse('workplace_violation_app:user_report_view', args=[report.pk])
+                    context['url'] = reverse('workplace_violation_app:view_action', args=[report.pk])
                     HttpResponse(status=200)
-                    return render(request, "workplace_violation_app/user_report_view.html", context)
+                    return render(request, "workplace_violation_app/report_action.html", context)
                 except Http404:
                     print("Form is not valid")
                     print("Errors:", form.errors)
