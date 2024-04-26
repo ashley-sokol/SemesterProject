@@ -12,7 +12,7 @@
 <!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
     </div>
 <div class="text-center border border-dark bg-white">
-    <table class="table">
+    <table class="table p-5">
         <thead style=" background-color:rgba(199,210,255,.5)">
             <tr>
                 <th>Report Date</th>
@@ -22,7 +22,7 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="p-3">
         {% for report in submissions %}
             {% if report.report_user == request.user %}
             <tr>
@@ -56,8 +56,8 @@
                 <td>
                     {% csrf_token %}
                     <input type="hidden" name="report_number" value="{{ report.report_number }}">
-                    <a href="{% url 'workplace_violation_app:view_action' report.report_number %}" class="btn btn-outline-primary">View Status</a>
-                    <a href="{% url 'workplace_violation_app:confirm_delete' report.report_number %}" class="btn btn-outline-danger text-dark text-center">Delete Submission</a>
+                    <a href="{% url 'workplace_violation_app:view_action' report.report_number %}" class="btn text-black btn-outline-primary">View Status</a>
+                    <a href="{% url 'workplace_violation_app:confirm_delete' report.report_number %}" class="btn btn-outline-danger text-black text-center">Delete Submission</a>
 
 
 <!--                    <form method="post" action="{% url 'workplace_violation_app:delete_submission' %}">-->
