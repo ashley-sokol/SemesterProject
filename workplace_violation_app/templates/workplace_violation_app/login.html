@@ -21,9 +21,9 @@
 <!--          <h3>Please click to log in below and save submitted reports</h3>-->
         {% if user.is_authenticated %}
             {% if user.is_admin %}
-                <p class="text-primary ">{{user.username}}, you are logged in as an admin.</p>
+                <p class="text-primary ">{{user.username|title}}, you are logged in as an admin.</p>
             {% else %}
-                <p> {{user.username}}, you are logged in as a common user.</p>
+                <p> {{user.username|title}}, you are logged in as a common user.</p>
             {% endif %}
             <a href="{% url 'workplace_violation_app:index' %}">Go to Home page</a>
         {% else %}
