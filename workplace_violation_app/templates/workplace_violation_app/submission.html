@@ -9,14 +9,18 @@
   <div class="container-fluid body text-center bg-white border border-dark">
     <div class="title p-3 rounded bg-white">
       <h2  class="text-black text-center ">Report Submitted!</h2>
+        {% if not user.is_authenticated %}
       <h5 class="text-black text-center">Please keep a copy of the case number below for your records</h5>
 <!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
+        {% endif %}
     </div>
   </div>
 <div class="text-center p-4" style="background-color:rgba(199,210,255,.5)">
     <h4 class="border border-dark p-5 rounded bg-white" >Report case number: {{ report.report_number }}</h4>
     {% if not user.is_authenticated %}
     <h5>Since you reported anonymously, this case number is your only way to access updates - please save it somewhere safe.</h5>
+    {% else %}
+    <h5>You are a logged-in user, and can access your submissions at any time through the "My Submissions" tab</h5>
     {% endif %}
 
   </div>
