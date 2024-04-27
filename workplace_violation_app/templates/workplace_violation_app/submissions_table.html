@@ -6,11 +6,13 @@
 {% bootstrap_messages %}
 <link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
 {% block content %}
-<div class="text-center">
-    <h1>Current Reports</h1>
+<div class="title p-3 rounded bg-white">
+      <h2  class="text-black text-center ">Submitted Reports</h2>
+<!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
+    </div>
     {% if user.is_admin %}
-    <table class="table">
-        <thead>
+    <table class="table bg-white border border-dark" >
+        <thead style=" background-color:rgba(199,210,255,.5)">
             <tr>
                 <th>Report Date</th>
                 <th> Report Status</th>
@@ -18,14 +20,14 @@
                 <th> View Report</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="p-3">
         {% for report in submissions %}
             <tr>
                 <td> {{ report.report_date }}</td>
                 <td> {{ report.report_status }}</td>
                 <td>{{ report.report_number}}</td>
                 <td>
-                    <a href="{% url 'workplace_violation_app:view_report' report_number=report.pk %}">View</a>
+                    <a class="btn btn-outline-primary" href="{% url 'workplace_violation_app:view_report' report_number=report.pk %}">View</a>
                 </td>
             </tr>
         {% endfor %}

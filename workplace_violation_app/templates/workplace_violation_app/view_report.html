@@ -5,29 +5,32 @@
 {% bootstrap_javascript %}
 {% bootstrap_messages %}
 {% block content %}
-<div>
-    <h1>Report Details:</h1>
-    <div>
-        <h3> Case Number: {{ report.report_number }}</h3>
-        <h3>Date: {{ report.report_date }}</h3>
-        <p> <strong>Text: </strong> {{ report.report_text }}</p>
-
+<div class="text-center" >
+    <div class="title p-3 bg-white" >
+      <h2 class="text-black"> Search for a Submitted Report Below</h2>
+<!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
     </div>
     <div>
+    <div class=" text-center text-black row p-1" style=" background-color:rgba(199,210,255,.5)"><h5 class="text-black "> Case Number: {{ report.report_number }}</h5> </div>
+    <div class=" text-center text-black row p-1" style=" background-color:rgba(199,210,255,.5)"><h5 class="text-black ">Date: {{ report.report_date }}</h5></div>
+    <div class=" text-center text-black row p-1" style=" background-color:rgba(199,210,255,.5)"><p> <strong>Text: </strong> {{ report.report_text }}</p></div>
+
+    </div>
+    <div class=" text-center text-black" style=" background-color:rgba(199,210,255,.5)">
         {% if report.report_file %}
-        <button id="view-file-btn" class="btn-danger mt-2">View File</button>
+        <button id="view-file-btn" class="btn-danger">View Submitted File</button>
         {% else %}
             <p> No file attached </p>
         {% endif %}
-        <div id="embedded_file" style = "display: none;">
+        <div class="p-3" id="embedded_file" style = "display: none;">
         {% if report.report_file %}
             {% with file_extension=report.report_file.name|slice:'-4:'|lower %}
                 {% if file_extension == '.pdf' %}
-                    <embed src="{{ report.report_file.url }}" width="100%" height="600px" type="application/pdf" />
+                    <embed src="{{ report.report_file.url }}" width="75%" height="800px" type="application/pdf" />
                 {% elif file_extension == '.jpg' or file_extension == 'jpeg' %}
                     <img src="{{ report.report_file.url }}" alt="{{ report.report_file.name }}"/>
                 {% elif file_extension == '.txt' %}
-                    <iframe src="{{ report.report_file.url }}" width="100%" height="600px"></iframe>
+                    <iframe src="{{ report.report_file.url }}" width="75%" height="800px"></iframe>
                 {% else %}
                     <p>Unsupported file type: {{ report.report_file.name }}</p>
                 {% endif %}
@@ -36,12 +39,12 @@
             <p>No file attached</p>
         {% endif %}
         </div>
-        <form method="post" action="{% url 'workplace_violation_app:mark_as_resolved' report.report_number %}">
+        <form class="p-3" method="post" action="{% url 'workplace_violation_app:mark_as_resolved' report.report_number %}">
             {% csrf_token %}
-            <button type="submit" class="btn btn-success">Mark as Resolved</button>
+            <button type="submit" class="btn p-1 btn-success">Mark as Resolved</button>
         </form>
-        <h3>Admin Notes:</h3>
-        <form method="post">
+<!--        <h3 >Admin Notes:</h3>-->
+        <form class="" method="post">
             {% csrf_token %}
             {{ notes_form.as_p }}
             <button type="submit" class="btn btn-primary">Save Notes</button>
@@ -50,6 +53,7 @@
                 <button type="submit" >Back to Submissions Table</button>
         
             </form>
+    </div>
     </div>
 </div>
 <script>
