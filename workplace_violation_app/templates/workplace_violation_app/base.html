@@ -77,6 +77,7 @@
       </ul>
       {% endif %}
       <ul class="navbar-nav navbar-right">
+
         {% if user.is_authenticated and not user.is_admin %}
         <li class="btn text-dark fst-italic">Welcome, {{ user.username|title }}.
         </li>
