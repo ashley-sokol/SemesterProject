@@ -9,7 +9,7 @@
 {% block content %}
   <div class="container-fluid body p-3 bg-white">
 <div class="title p-3 rounded bg-white">
-    <h2  class="text-black text-center ">Log Into VoiceUP! To Save Your Submissions</h2>
+    <h2  class="text-black text-center ">Log Into VoiceUP! To View Updates To Your Submissions</h2>
     <h5 class="text-center">Your submissions will always remain anonymous. </h5>
 <!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
 <!--    </div><div class="container col-md-6 p-5 rounded border border-dark" style="background-color:rgba(199,210,255,.5)">-->
@@ -29,7 +29,7 @@
         {% else %}
 <!--            <h3>Please click to log in below and save submitted reports</h3>-->
 <!--            <a class="btn button-primary" href="{% provider_login_url 'google' %}">Login With Google</a>-->
-          <a href="{% provider_login_url 'google' %}" class="btn btn-outline-primary pd-3 text-dark text-center">Log In With Google</a>
+          <a href="{% provider_login_url 'google' %}" class="btn btn-primary pd-3 text-white text-center">Log In With Google</a>
         {% endif %}
 
       </div>

@@ -5,7 +5,7 @@
 {% bootstrap_javascript %}
 <link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
 <html style="font-family: 'Georgia'">
-    <body style="font-family:Montserrat">
+    <body style="font-family:Georgia">
 
 
 <!--    <nav class="navbar navbar-expand-sm bg-dark">-->
@@ -35,7 +35,7 @@
 
 <!--    </nav>-->
 <nav class="navbar navbar-expand-sm bg-white border border-dark ">
-    <div class="container-fluid text-dark">
+    <div class=" text-dark">
       <ul class="navbar-nav">
 
         <a class="navbar-brand" href="{% url 'workplace_violation_app:index' %}">
@@ -47,6 +47,11 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'workplace_violation_app:index' %}" class="btn btn-outline-primary text-center">Report</a>
         </li>
+        {% if user.is_authenticated and not user.is_admin %}
+          <li class="nav-item">
+          <a href="{% url 'workplace_violation_app:user_submissions' %}" class="nav-link" href="{% url 'workplace_violation_app:index' %}" class="btn btn-outline-primary text-center">My Submissions</a>
+        </li>
+        {% endif %}
         {% if not user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'workplace_violation_app:login' %}" class="btn btn-outline-primary text-center">Log in</a>
@@ -55,9 +60,11 @@
           <a class="nav-link" href="{% url 'workplace_violation_app:case_search' %}" class="btn btn-outline-primary text-center">Case Number Search</a>
         </li>
         {% else %}
-         <li class="nav-item">
-          <a href="{% url 'workplace_violation_app:user_submissions' %}" class="nav-link" href="{% url 'workplace_violation_app:index' %}" class="btn btn-outline-primary text-center">My Submissions</a>
+          {% if user.is_authenticated and user.is_admin %}
+          <li class="nav-item">
+          <a href="{% url 'workplace_violation_app:submissions_table' %}" class="nav-link" href="{% url 'workplace_violation_app:submissions_table' %}" class="btn btn-outline-primary text-center">View Submissions</a>
         </li>
+          {% endif %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'workplace_violation_app:case_search' %}" class="btn btn-outline-primary text-center">Case Number Search</a>
         </li>
@@ -70,26 +77,48 @@
           <a class="nav-link" href="{% url 'workplace_violation_app:info' %}" class="btn btn-outline-primary text-center">Learn More</a>
         </li>
 
-      </ul>
-      {% if user.is_authenticated and user.is_admin %}
-      <ul class="navbar-nav navbar-right">
-        <li class="text-dark fst-italic">Welcome, {{ user.username }}. You are logged in as an admin.</li>
-      </ul>
-      {% endif %}
+<!--      </ul>-->
+<!--      {% if user.is_authenticated and user.is_admin %}-->
+<!--      <ul class="navbar-nav navbar-right">-->
+<!--        <li class="text-dark fst-italic">Welcome, {{ user.username|title }}. You are logged in as an admin.</li>-->
+<!--        <li class="nav-item navbar-nav navbar-right">  <a href="{% url 'workplace_violation_app:logout' %}" class="btn btn-outline-primary text-dark text-center">Log Out</a>-->
+<!--      </li>-->
+<!--      </ul>-->
+
+<!--      {% endif %}-->
+
+        {% if user.is_authenticated and user.is_admin %}
+          <div class="p-4" ></div>
+        <div class="p-4" ></div>
+           <div class="p-4" ></div>
+        <div class="p-4" ></div>
+        <li class="nav-item p-2 navbar-nav navbar-right text-dark fst-italic"> Welcome, {{ user.username|title }}. You are logged in as an admin </li>
+        <li class="nav-item navbar-right">
+          <a href="{% url 'workplace_violation_app:logout' %}" class="btn btn-outline-primary text-dark text-center">Log Out</a>
+        </li>
+              {% endif %}
       <ul class="navbar-nav navbar-right">
 
         {% if user.is_authenticated and not user.is_admin %}
-        <li class="btn text-dark fst-italic">Welcome, {{ user.username|title }}.
-        </li>
-        <li class="nav-item navbar-nav navbar-right">
+          <div class="p-4" ></div>
+        <div class="p-4" ></div>
+      <div class="p-4" ></div>
+          <div class="p-4" ></div>
+        <div class="p-4" ></div>
+          <div class="p-4" ></div>
+        <div class="p-4" ></div>
+          <div class="p-4" ></div>
+        <li class="btn text-dark fst-italic">Welcome, {{ user.username|title }}. </li>
+        <li class="nav-item">
           <a href="{% url 'workplace_violation_app:logout' %}" class="btn btn-outline-primary text-dark text-center">Log Out</a>
         </li>
       </ul>
       {% endif %}
-
+      </ul>
     </div>
   </nav>
     {% block content %}{% endblock %}
+<div class="p-5 bg-white" ></div>
 <footer class="text-center text-white p-1 mt-3 fixed-bottom" style=" background-color:rgba(0, 0, 0, 0.4)">
         <p>This is a Class Project, this is an unmonitored system, and no real information should be submitted</p>
     </footer>

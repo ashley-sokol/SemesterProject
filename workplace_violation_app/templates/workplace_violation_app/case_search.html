@@ -17,10 +17,10 @@
 <!--        <h3> Report a Violation Anonymously</h3>-->
 
         <div class="p-3">
-          <form action ="" method = "post">
+          <form class="row" action ="" method = "post">
             {% csrf_token %}
             {{SearchForm}}
-            <button class="btn-primary mt-2">Find case</button>
+            <button class=" p-1 btn-primary mt-2">Find case</button>
           </form>
           {% if CaseNotFound %}
             <p>Case not found</p>
