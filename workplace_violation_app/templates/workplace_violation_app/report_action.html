@@ -1,11 +1,25 @@
 {% extends 'workplace_violation_app/base.html' %}
 {% block content %}
-<div class="container">
-    <h2>Admin Action:</h2>
-    <p><strong>Date:</strong> {{ report.report_date }}</p>
-    <p><strong>Report Text:</strong> {{ report.report_text }}</p>
-    <h3>Admin Notes:</h3> 
+<div class="container-fluid p-3 bg-white text-center">
+    <div class="text-center " >
+    <div class="title p-3 bg-white border border-dark" >
+      <h2 class="text-black">Submission Report</h2>
+<!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
+    </div></div>
+        <div class="p-1 bg-white" style=" background-color:rgba(199,210,255,.5)">
+        <div class="p-3 border border-dark rounded" style=" background-color:rgba(199,210,255,.5)">
+    <p><strong>Date of submission:</strong> {{ report.report_date }}</p>
+        </div>
+        </div>
+    <div class="p-1 bg-white" style=" background-color:rgba(199,210,255,.5)">
+        <div class="p-3 rounded border border-dark" style=" background-color:rgba(199,210,255,.5)">
+            <p><strong>Report Text:</strong> {{ report.report_text }}</p>
+        </div>
+        </div>
+    <div class="p-1 bg-white" style=" background-color:rgba(199,210,255,.5)">
+        <div class="p-3 rounded border border-dark" style=" background-color:rgba(199,210,255,.5)">
+<h3>Admin Notes:</h3>
     <p>{{ report.admin_notes }}</p>
-
-</div>
+        </div>
+    </div></div>
 {% endblock %}

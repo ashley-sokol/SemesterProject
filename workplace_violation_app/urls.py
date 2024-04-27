@@ -19,5 +19,7 @@ urlpatterns = [
     path('user_report_action/<uuid:report_number>/', ReportActionView.as_view(), name='view_action'),
     path('report/mark_resolved/<uuid:report_number>/', ViewReportView.mark_as_resolved, name='mark_as_resolved'),
     path('user_report_view/<uuid:report_number>/', UserReportView.as_view(), name='user_report_view'),
-    path ('info', InfoView.as_view(), name='info')
+    path('info', InfoView.as_view(), name='info'),
+    path('case_search', CaseSearchView.as_view(), name='case_search'),
+    path('confirm_delete/<uuid:report_number>/', ConfirmDelete.as_view(), name='confirm_delete')
 ]

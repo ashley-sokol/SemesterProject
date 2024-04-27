@@ -1,0 +1,62 @@
+{% extends 'workplace_violation_app/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+<link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
+{% block content %}
+<div class="container-fluid body bg-white"  >
+  <div class="text-center" >
+    <div class="title p-3 bg-white" >
+      <h2 class="text-black"> Search for a Submitted Report Below</h2>
+<!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
+    </div>
+    <div class="row p-5 rounded"  style=" background-color:rgba(199,210,255,.5)" >
+      <div class="container col-md-10 text-center bg-body border border-dark" style="text-align:left height:1000px;">
+<!--        <h3> Report a Violation Anonymously</h3>-->
+
+        <div class="p-3">
+          <form action ="" method = "post">
+            {% csrf_token %}
+            {{SearchForm}}
+            <button class="btn-primary mt-2">Find case</button>
+          </form>
+          {% if CaseNotFound %}
+            <p>Case not found</p>
+          {% endif %}
+          {% if UUIDNotValid %}
+            <p>Invalid case number entered</p>
+          {% endif %}
+        </div>
+
+      </div>
+<!--      <div class="container col-md-4" style="text-align:left;">-->
+<!--        <div class="card">-->
+<!--          <img class="card-img-top" src="{% static '/admin/img/construction_stock_photo.jpg' %}" alt="img">-->
+<!--          <div class="card-body">-->
+<!--            <h4 class="card-title">Learn about reporting</h4>-->
+<!--            <p class="card-text">It is your right as an employee to fair treatment and safe working conditions - our application is here to provide you with a quick, actionable, and reliable method of submitting workplace violations. Not sure what exactly a workplace violation is, or just interested in learning how to report?</p>-->
+<!--            <a href="#" class="btn btn-primary">Learn more</a>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="">-->
+
+<!--        </div>-->
+<!--      </div>-->
+    </div>
+
+    <!--{% if form.errors %}
+      <div class="error">
+        <p>There were some errors in your submission:</p>
+        {{ form.errors }}
+      </div>
+    {% endif %}
+
+    !-->
+
+  </div>
+
+{% endblock %}
+
+</div>

@@ -6,15 +6,24 @@
 {% bootstrap_messages %}
 <link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
 {% block content %}
-  <div class="container-fluid body">
-    <h1>The data is saved. Thank you for your submission</h1>
-    <h4>Report case number: {{ report.report_number }}</h4>
+  <div class="container-fluid body text-center bg-white border border-dark">
+    <div class="title p-3 rounded bg-white">
+      <h2  class="text-black text-center ">Report Submitted!</h2>
+      <h5 class="text-black text-center">Please keep a copy of the case number below for your records</h5>
+<!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
+    </div>
+  </div>
+<div class="text-center p-4" style="background-color:rgba(199,210,255,.5)">
+    <h4 class="border border-dark p-5 rounded bg-white" >Report case number: {{ report.report_number }}</h4>
     {% if not user.is_authenticated %}
     <h5>Since you reported anonymously, this case number is your only way to access updates - please save it somewhere safe.</h5>
     {% endif %}
+
+  </div>
+<div class="text-center p-4" style="background-color:rgba(199,210,255,.5)" >
     <form action="{% url 'workplace_violation_app:index'%}" method="get">
-        <button type="submit" >Back to Reporting Page</button>
+        <button class=" p-3" type="submit" >Back to Reporting Page</button>
 
     </form>
-        
+    </div>
 {% endblock %}

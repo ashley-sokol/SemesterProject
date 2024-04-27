@@ -7,10 +7,18 @@
 {% load socialaccount %}
 <link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
 {% block content %}
-  <div class="container-fluid body">
-<div class="text-center">
-    <h1>Welcome to the login page</h1>
-    <h2>Please login below</h2>
+  <div class="container-fluid body p-3 bg-white">
+<div class="title p-3 rounded bg-white">
+    <h2  class="text-black text-center ">Log Into VoiceUP! To Save Your Submissions</h2>
+    <h5 class="text-center">Your submissions will always remain anonymous. </h5>
+<!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
+<!--    </div><div class="container col-md-6 p-5 rounded border border-dark" style="background-color:rgba(199,210,255,.5)">-->
+
+  </div>
+
+  </div>
+<div class="text-center p-5 " style="background-color:rgba(199,210,255,.5)">
+<!--          <h3>Please click to log in below and save submitted reports</h3>-->
         {% if user.is_authenticated %}
             {% if user.is_admin %}
                 <p class="text-primary ">{{user.username}}, you are logged in as an admin.</p>
@@ -19,7 +27,14 @@
             {% endif %}
             <a href="{% url 'workplace_violation_app:index' %}">Go to Home page</a>
         {% else %}
-            <a href="{% provider_login_url 'google' %}">Login With Google</a>
+<!--            <h3>Please click to log in below and save submitted reports</h3>-->
+<!--            <a class="btn button-primary" href="{% provider_login_url 'google' %}">Login With Google</a>-->
+          <a href="{% provider_login_url 'google' %}" class="btn btn-outline-primary pd-3 text-dark text-center">Log In With Google</a>
         {% endif %}
+
+      </div>
+<div class="text-center p-5 " style="background-color:rgba(199,210,255,.5)">
 </div>
-      {% endblock %}</div>
+
+
+{% endblock %}

@@ -1,11 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head class="text-center">
-    <meta charset="UTF-8">
-    <title>Delete Submission</title>
-    <h1 class="text-center">Are you sure you want to delete submission?</h1>
-</head>
-<body>
+{% extends 'workplace_violation_app/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+<link rel="stylesheet" href="{% static '/admin/css/style.css' %}">
+{% block content %}
+  <div class="container-fluid body text-center bg-white border border-dark">
+    <div class="title p-3 rounded bg-white">
+      <h2  class="text-black text-center ">Are You Sure You Want to Delete Submission? </h2>
+      <h5 class="text-danger text-center">Note: This action can not be undone</h5>
+<!--      <h5>The Anonymous Workplace Whistleblower</h5>-->
+     <div class="row p-4 rounded">
+      <div class="container col-md-10 text-center bg-body border border-dark" style="text-align:left height:1000px;">
+<!--        <h3> Report a Violation Anonymously</h3>-->
 
-</body>
-</html>
+        <div>
+  </div></div>
+  </div>
+  <div class="text-center rounded border border-dark p-5" style="background-color:rgba(199,210,255,.5)">
+        <form action="{% url 'workplace_violation_app:delete_submission'%}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="report_number" value="{{ report.report_number }}">
+          <button class="btn text-dark btn-outline-danger p-3" type="submit">Confirm Deletion</button>
+          <a href="{% url 'workplace_violation_app:user_submissions' %}" class="btn btn-outline-primary p-3 text-dark text-center">Cancel</a>
+        </form>
+      </div>
+<!--<div class="text-center rounded border border-dark p-5" style="background-color:rgba(199,210,255,.5)" >-->
+<!--    <form action="{% url 'workplace_violation_app:delete_submission'%}" method="post">-->
+<!--         {% csrf_token %}-->
+<!--        <input type="hidden" name="report_number" value="{{ report.report_number }}">-->
+<!--        <button class="btn text-dark btn-outline-danger p-3" type="submit" >Confirm Deletion</button>-->
+<!--        <a href="{% url 'workplace_violation_app:user_submissions' %}" class="btn btn-outline-primary p-3 text-dark text-center">Cancel</a>-->
+
+<!--    </form>-->
+<!--    </div>-->
+{% endblock %}
+    </div>
+  </div>
