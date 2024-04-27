@@ -44,15 +44,17 @@
             <button type="submit" class="btn p-1 btn-success">Mark as Resolved</button>
         </form>
 <!--        <h3 >Admin Notes:</h3>-->
-        <form class="" method="post">
+        <div class="container col-md-10 text-center rounded bg-body border border-dark" style="text-align:left height:1000px;">
+        <form class="text-center" method="post">
             {% csrf_token %}
             {{ notes_form.as_p }}
             <button type="submit" class="btn btn-primary">Save Notes</button>
-            </form>
-        <form action="{% url 'workplace_violation_app:submissions_table'%}" method="get">
+        </form>
+
+        </div>
+        <form class="p-3" action="{% url 'workplace_violation_app:submissions_table'%}" method="get">
                 <button type="submit" >Back to Submissions Table</button>
-        
-            </form>
+        </form>
     </div>
     </div>
 </div>
