@@ -210,11 +210,11 @@ class DeleteSubmission(View):
             report.delete()
             submissions = Report.objects.all().order_by('-report_date')
             context = {'submissions': submissions}
-            return render(request, self.template_name, context)
+            return redirect('workplace_violation_app:user_submissions')
         else:
             submissions = Report.objects.all().order_by('-report_date')
             context = {'submissions': submissions}
-            return render(request, self.template_name, context)
+            return redirect('workplace_violation_app:user_submissions')
     # def get(self, request, *args, **kwargs):
     #     file_path = kwargs.get('file_path')
     #     report_id = request.GET.get('report_id')
